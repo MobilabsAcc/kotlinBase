@@ -17,13 +17,7 @@ object P1 {
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
     fun centuryFromYear(year: Int): Int {
-        val modulo = year.rem(100)
-        val century = (year - modulo) / 100
-        return if (modulo != 0) {
-            century + 1
-        } else {
-            century
-        }
+        return (year - 1) / 100 + 1
     }
 
     /**
@@ -33,9 +27,6 @@ object P1 {
      * For inputString = "a", the output should be checkPalindrome(inputString) = true.
      */
     fun checkPalindrome(inputString: String): Boolean {
-        for (i in 0 until inputString.length / 2) {
-            if (inputString[i] != inputString[inputString.length - i - 1]) return false
-        }
-        return true
+        return inputString == inputString.reversed()
     }
 }
