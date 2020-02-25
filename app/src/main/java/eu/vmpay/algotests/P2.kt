@@ -16,6 +16,7 @@ object P2 {
             }
         }
         return max
+        TODO("not implemented")
     }
 
     /**
@@ -33,6 +34,7 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
+        TODO("not implemented")
     }
 
     /**
