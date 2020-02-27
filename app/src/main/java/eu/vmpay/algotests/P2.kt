@@ -9,7 +9,7 @@ object P2 {
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        return inputArray.zipWithNext().map { (a, b) -> a * b}.max()!!
     }
 
     /**
@@ -27,7 +27,11 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        TODO("not implemented")
+        var sum = 1
+        for (i in 2..n) {
+            sum += (i - 1) * 4
+        }
+        return sum
     }
 
     /**
@@ -40,7 +44,10 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        val min = statues.min()!!
+        val max = statues.max()!!
+        val length = statues.size
+        return max - min - length + 1
     }
 
     /**
@@ -55,7 +62,7 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        TODO()
     }
 
     /**
@@ -81,7 +88,20 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+        var sum = 0
+        val badColumns = HashSet<Int>()
+        for ((i, values) in matrix.withIndex()) {
+            for ((j, value) in values.withIndex()) {
+                if (value == 0) {
+                    badColumns.add(j)
+                    continue
+                }
+                if (!badColumns.contains(j)) {
+                    sum += value
+                }
+            }
+        }
+        return sum
     }
 
 }
