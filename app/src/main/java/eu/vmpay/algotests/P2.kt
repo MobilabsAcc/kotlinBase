@@ -49,7 +49,17 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        var max = statues[0]
+        var min = statues[0]
+        for (statue in statues) {
+            if (statue > max) {
+                max = statue
+            }
+            if (statue < min) {
+                min = statue
+            }
+        }
+        return max - min + 1 - statues.size
     }
 
     /**
