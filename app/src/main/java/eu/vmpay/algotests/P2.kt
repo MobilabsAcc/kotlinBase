@@ -1,7 +1,5 @@
 package eu.vmpay.algotests
 
-import kotlin.math.pow
-
 object P2 {
 
     /**
@@ -10,17 +8,8 @@ object P2 {
      * For inputArray = [3, 6, -2, -5, 7, 3], the output should be
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
-    fun adjacentElementsProduct(inputArray: MutableList<Int>): Int? {
-        var maxProduct: Int? = inputArray[0]*inputArray[1]
-
-        var product: Int? = null
-        for (i in 1 until inputArray.indices.last){
-            product = inputArray[i]*inputArray[i+1]
-            if(product > maxProduct!!){
-                maxProduct = product
-            }
-        }
-        return maxProduct
+    fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
+        TODO("not implemented")
     }
 
     /**
@@ -40,11 +29,7 @@ object P2 {
     fun shapeArea(n: Int): Int {
         val base: Double = 2.00
         val area = base.pow(n.toDouble())
-        var result: Int? = null
-        for(i in n..1) {
-            result = (shapeArea(n) + shapeArea(n - 1))
-        }
-        return result!!
+        return (shapeArea(n) + shapeArea(n - 1))
     }
 
     /**
@@ -57,7 +42,17 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        var min = statues[0]
+        var max = statues[0]
+
+        for (i in 1 until statues.size){
+            if(statues[i] > max){
+                max = statues[i]
+            }
+            if(statues[i] < min){
+                min = statues[i]
+            }
+        }
     }
 
     /**
@@ -102,3 +97,5 @@ object P2 {
     }
 
 }
+
+//almost i matrix do soboty do 24
