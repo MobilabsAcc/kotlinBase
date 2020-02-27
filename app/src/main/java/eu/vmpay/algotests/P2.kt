@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import kotlin.math.pow
+
 object P2 {
 
     /**
@@ -9,7 +11,12 @@ object P2 {
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var max = inputArray[0]*inputArray[1]
+        for (i in 2 until inputArray.size - 1) {
+            if(inputArray[i]*inputArray[i+1] > max)
+                max = inputArray[i]*inputArray[i+1]
+        }
+        return max
     }
 
     /**
@@ -27,7 +34,10 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        TODO("not implemented")
+        var sum = 2*n - 1
+        for(i in 1 until 2*n -1 step 2)
+            sum+= i*2
+        return sum
     }
 
     /**
@@ -40,7 +50,15 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        var min = statues[0]
+        var max = statues[0]
+        for (i in 1 until statues.size) {
+            if(statues[i] > max)
+                max = statues[i]
+            if(statues[i] < min)
+                min = statues[i]
+        }
+        return max - min - (statues.size - 1)
     }
 
     /**
