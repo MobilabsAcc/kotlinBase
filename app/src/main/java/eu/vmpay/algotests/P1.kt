@@ -7,7 +7,7 @@ object P1 {
      * For param1 = 1 and param2 = 2, the output should be add(param1, param2) = 3.
      */
     fun add(param1: Int, param2: Int): Int {
-        TODO("not implemented")
+        return param1 + param2
     }
 
     /**
@@ -17,7 +17,10 @@ object P1 {
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
     fun centuryFromYear(year: Int): Int {
-        TODO("not implemented")
+        if(year%100 == 0)
+            return year/100
+        else
+            return year/100 + 1
     }
 
     /**
@@ -27,6 +30,8 @@ object P1 {
      * For inputString = "a", the output should be checkPalindrome(inputString) = true.
      */
     fun checkPalindrome(inputString: String): Boolean {
-        TODO("not implemented")
+        if(inputString == inputString.reversed())
+            return true
+        return false
     }
 }
