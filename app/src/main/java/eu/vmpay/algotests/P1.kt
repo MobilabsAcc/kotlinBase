@@ -7,17 +7,21 @@ object P1 {
      * For param1 = 1 and param2 = 2, the output should be add(param1, param2) = 3.
      */
     fun add(param1: Int, param2: Int): Int {
-        TODO("not implemented")
+        return param1 + param2
     }
 
-    /**jfhgfg
+    /**
      * Given a year, return the century it is in. The first century spans from the year 1 up to and
      * including the year 100, the second - from the year 101 up to and including the year 200, etc.
      * For year = 1905, the output should be centuryFromYear(year) = 20;
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
-    fun centuryFromYear(year: Int): Int {
-        TODO("not implemented")
+    fun centuryFromYear(year: Int): Int{
+        var century = year / 100
+        if(year.rem(100) > 0){
+            century++
+        }
+        return century
     }
 
     /**
@@ -27,6 +31,16 @@ object P1 {
      * For inputString = "a", the output should be checkPalindrome(inputString) = true.
      */
     fun checkPalindrome(inputString: String): Boolean {
-        TODO("not implemented")
+        var i = 0
+        var j: Int = inputString.length - 1
+
+        while(i<j){
+            if(inputString[i] != inputString[j]){
+                return false
+            }
+            i++
+            j--
+        }
+        return true
     }
 }
