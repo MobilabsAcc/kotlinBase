@@ -11,3 +11,36 @@ package eu.vmpay.algotests
  *
  * Goal: implement the bakery, donut, topping, order abstractions reflecting the above case.
  */
+
+class Bakery {
+
+    var amountOrders = 0
+    var valueOfOrders = 0.0
+
+    fun makeOrder() : Double {
+        val donut = Donut(SizeOfDonut.extraLarge, listOf(Topping.strawberry,Topping.blueberry,Topping.nutella))
+        amountOrders++
+        valueOfOrders += donut.price
+       return donut.price
+    }
+
+    fun average() = valueOfOrders / amountOrders
+
+}
+
+class Donut constructor(sizeOfDonut: SizeOfDonut, toppings: List<Topping>){
+    val price = sizeOfDonut.price + toppings.sumByDouble { it.price }
+}
+
+enum class SizeOfDonut(val price: Double){
+    standard(2.0),
+    extraLarge(3.5),
+}
+
+enum class Topping (val price: Double) {
+    cranberry(1.0),
+    blueberry(1.0),
+    raspberry(1.0),
+    strawberry(1.0),
+    nutella(2.0),
+}
