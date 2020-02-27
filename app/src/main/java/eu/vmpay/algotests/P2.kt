@@ -9,7 +9,12 @@ object P2 {
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var max = inputArray[0] * inputArray[1]
+
+        for (i: Int in 1 until inputArray.size - 1){
+            if(inputArray[i] * inputArray[i+1] > max)   max = inputArray[i] * inputArray[i+1]
+        }
+        return max
     }
 
     /**
