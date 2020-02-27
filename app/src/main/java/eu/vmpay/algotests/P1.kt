@@ -6,9 +6,8 @@ object P1 {
      * Write a function that returns the sum of two numbers.
      * For param1 = 1 and param2 = 2, the output should be add(param1, param2) = 3.
      */
-    fun add(param1: Int, param2: Int): Int {
-        TODO("not implemented")
-    }
+
+    fun add(param1: Int, param2: Int) = param1 + param2
 
     /**
      * Given a year, return the century it is in. The first century spans from the year 1 up to and
@@ -16,8 +15,12 @@ object P1 {
      * For year = 1905, the output should be centuryFromYear(year) = 20;
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
-    fun centuryFromYear(year: Int): Int {
-        TODO("not implemented")
+
+    fun centuryFromYear(year: Int): Int{
+        return if(year % 100 == 0)
+            year / 100
+        else
+            year / 100 + 1
     }
 
     /**
@@ -26,7 +29,6 @@ object P1 {
      * For inputString = "abac", the output should be checkPalindrome(inputString) = false;
      * For inputString = "a", the output should be checkPalindrome(inputString) = true.
      */
-    fun checkPalindrome(inputString: String): Boolean {
-        TODO("not implemented")
-    }
+
+    fun checkPalindrome(inputString: String) = inputString == inputString.reversed()
 }
