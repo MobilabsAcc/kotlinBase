@@ -8,7 +8,16 @@ object P3 {
      * allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
      */
     fun allLongestStrings(inputArray: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        var list = mutableListOf(inputArray[0])
+        var i = 1
+        while(i < inputArray.size){
+            when{
+                inputArray[i].length > list[0].length -> list = mutableListOf(inputArray[i])
+                inputArray[i].length == list[0].length -> list.add(inputArray[i])
+            }
+            i++
+        }
+        return list
     }
 
     /**
@@ -17,7 +26,16 @@ object P3 {
      * Strings have 3 common characters - 2 "a"s and 1 "c".
      */
     fun commonCharacterCount(s1: String, s2: String): Int {
-        TODO("not implemented")
+        var sum = 0
+        var temp = s2
+        for(i in s1){
+            if(temp.contains(i)){
+                val index = temp.indexOfFirst { it == i }
+                temp = temp.removeRange(index, index + 1)
+                sum++
+            }
+        }
+        return sum
     }
 
     /**
@@ -28,7 +46,19 @@ object P3 {
      * For n = 239017, the output should be isLucky(n) = false.
      */
     fun isLucky(n: Int): Boolean {
-        TODO("not implemented")
+        val string = n.toString()
+        var i = 0
+        var sum1 = 0
+        var sum2 = 0
+        while(i < string.length/2){
+            sum1 += string[i].toInt()
+            sum2 += string[string.length - i - 1].toInt()
+            i++
+        }
+        if(sum1 == sum2){
+            return true
+        }
+        return false
     }
 
     /**
@@ -39,7 +69,27 @@ object P3 {
      * the output should be sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
      */
     fun sortByHeight(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val people = getSortedPeople(a)
+        var i = 0
+        var j = 0
+        while(i < a.size){
+            if(a[i] > 0) {
+                a[i] = people[j]
+                j++
+            }
+            i++
+        }
+        return a
+    }
+
+    private fun getSortedPeople(a: MutableList<Int>): MutableList<Int>{
+        val result = mutableListOf<Int>()
+        for(i in a){
+            if(i > 0)
+                result.add(i)
+        }
+        result.sort()
+        return result
     }
 
     /**
@@ -55,6 +105,35 @@ object P3 {
      * Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
      */
     fun reverseInParentheses(inputString: String): String {
-        TODO("not implemented")
+        var result = inputString
+        var substring: String
+        var i = 0
+        var j: Int
+        while(result.contains('(')){
+            if(i >= result.length)
+                i=0
+            if(result[i] == '('){
+                j = i + 1
+                while(j < result.length){
+                    if(result[j] =='(')
+                        i = j
+                    if(result[j] == ')')
+                        break
+                    j++
+                }
+                substring = result.substring(i, j)
+                substring = reverse(substring)
+                result = result.replaceRange(i, j + 1, substring)
+            }
+            i++
+        }
+        return result
+    }
+
+    private fun reverse(string: String): String{
+        var result = string.reversed()
+        result = result.removePrefix(")")
+        result = result.removeSuffix("(")
+        return result
     }
 }

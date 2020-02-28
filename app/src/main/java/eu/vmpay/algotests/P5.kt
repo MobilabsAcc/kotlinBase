@@ -11,3 +11,29 @@ package eu.vmpay.algotests
  *
  * Goal: implement the bakery, donut, topping, order abstractions reflecting the above case.
  */
+
+interface Sellable{
+    var name: String
+    var priceZlotowki: Int
+    var priceGrosze: Int
+}
+
+data class Topping(override var name: String,
+                   override var priceGrosze: Int,
+                    override var priceZlotowki: Int): Sellable
+
+data class TypeOfDonut(override var name: String,
+                       override var priceGrosze: Int,
+                       override var priceZlotowki: Int): Sellable
+
+data class Donut(var typeOfDonut: TypeOfDonut, var toppings: List<Topping>)
+
+class Bakery{
+    private val orderList: MutableList<Donut> = mutableListOf()
+    fun order(typeOfDonut: TypeOfDonut, toppings: List<Topping>): Donut{
+        println("You bought a donut")
+        return Donut(typeOfDonut, toppings)
+    }
+}
+
+//Made by Mateusz Wasilewski, Karol Puchała, Marcin Rogalski
