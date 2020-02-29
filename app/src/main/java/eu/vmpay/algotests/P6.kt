@@ -15,7 +15,7 @@ package eu.vmpay.algotests
  */
 
 fun main(){
-    var ship = Ship
+    var ship = Ship(350, 50)
 
     var tourist1 = Tourist("Kasia", "Kowalczyk", 20)
     var tourist2 = Tourist("Asia", "Basia", 12)
@@ -23,6 +23,10 @@ fun main(){
 
     var crew1 = MemberOfCrew("AisaK", "Kyzclawok", 42, Crew.CAPTAIN)
     var crew2 = MemberOfCrew("Aisa", "Kyzclawok", 22, Crew.ORDINARY_EMPOLOYEE)
+
+    ship.takeCrew(crew1) ; ship.takeCrew(crew2)
+
+    ship.takeTourists(tourist1) ; ship.takeTourists(tourist2) ; ship.takeTourists(tourist3)
 
     var cabin1 = Cabin(Capacity.BIG)
     var cabin2 = Cabin(Capacity.SMALL)
@@ -195,7 +199,10 @@ enum class Crew{
     CAPTAIN
 }
 
-object Ship{
+class Ship(var capacityOfTourist: Int, var capacityOfCrew: Int){
+
+    private var listOfCrew = ArrayList<MemberOfCrew>()
+    private var listOfTourist = ArrayList<Tourist>()
 
     private var engineOne : Engine? = null
     private var engineTwo : Engine? = null
@@ -205,6 +212,16 @@ object Ship{
          engineOne = Engine(2.0)
          engineTwo = Engine(4.0)
 
+    }
+
+    fun takeTourists(tourist: Tourist){
+        if (listOfTourist.size < capacityOfTourist) listOfTourist.add(tourist)
+        else                                        println("Sorry, ship is full")
+    }
+
+    fun takeCrew(crew: MemberOfCrew){
+        if (listOfCrew.size < capacityOfCrew)       listOfCrew.add(crew)
+        else                                        println("Sorry, ship is full")
     }
 
     fun getEngine1(): Engine{
