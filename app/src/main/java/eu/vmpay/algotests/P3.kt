@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import java.util.*
+
 object P3 {
 
     /**
@@ -8,7 +10,16 @@ object P3 {
      * allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
      */
     fun allLongestStrings(inputArray: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        val longestString: MutableList<String> = arrayListOf()
+        var maxSizeString = 0
+
+        for (i in 0 until inputArray.size)
+            if (inputArray[i].length >= maxSizeString ) maxSizeString = inputArray[i].length
+
+        for (i in 0 until inputArray.size)
+            if (inputArray[i].length == maxSizeString ) longestString.add(inputArray[i])
+
+        return longestString
     }
 
     /**
@@ -17,7 +28,21 @@ object P3 {
      * Strings have 3 common characters - 2 "a"s and 1 "c".
      */
     fun commonCharacterCount(s1: String, s2: String): Int {
-        TODO("not implemented")
+        var counter = 0
+
+        val list : MutableList<Char> = arrayListOf()
+
+        for (aChar in s1.toCharArray()) {
+            list.add(aChar)
+        }
+
+        for (c in s2.toCharArray()) {
+            if (list.contains(c)) {
+                list.remove(Character.valueOf(c))
+                counter++
+            }
+        }
+        return counter
     }
 
     /**
@@ -28,7 +53,18 @@ object P3 {
      * For n = 239017, the output should be isLucky(n) = false.
      */
     fun isLucky(n: Int): Boolean {
-        TODO("not implemented")
+
+        val number: String = n.toString()
+        val first = number.substring(0, number.length/2)
+        val second = number.substring(number.length/2, number.length)
+        var firstSum = 0
+        var secondSum = 0
+
+        for (i in 0 until first.length) firstSum += first.toCharArray()[i].toInt()
+        for (i in 0 until second.length) secondSum += second.toCharArray()[i].toInt()
+
+        return firstSum == secondSum
+
     }
 
     /**
@@ -39,7 +75,17 @@ object P3 {
      * the output should be sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
      */
     fun sortByHeight(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val b: MutableList<Int> = arrayListOf()
+        val treeIndex: MutableList<Int> = arrayListOf()
+
+        for (i in 0 until a.size) if ( a[i] != -1 ) b.add(a[i]) else treeIndex.add(i)
+
+        val c: MutableList<Int> = b.sorted().toMutableList()
+
+        for (i in 0 until treeIndex.size) c.add(treeIndex[i], -1 )
+
+        return c
+
     }
 
     /**
@@ -55,6 +101,15 @@ object P3 {
      * Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
      */
     fun reverseInParentheses(inputString: String): String {
-        TODO("not implemented")
+        var reverseList:String = inputString
+
+        while (reverseList.contains('(')){
+            val startIndex = reverseList.lastIndexOf('(')
+            val endIndex = reverseList.indexOf(')', reverseList.lastIndexOf('('))
+            reverseList = reverseList.slice(0 until  startIndex) +
+                    reverseList.slice(startIndex +1 until endIndex).reversed() +
+                    reverseList.slice(endIndex +1 until reverseList.length)
+        }
+        return reverseList
     }
 }

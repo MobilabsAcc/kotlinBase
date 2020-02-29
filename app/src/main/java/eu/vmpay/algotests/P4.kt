@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import java.util.*
+
 object P4 {
     /**
      * Several people are standing in a row and need to be divided into two teams.
@@ -9,14 +11,23 @@ object P4 {
      * team 1, and the second element is the total weight of team 2 after the division is complete.
      */
     fun alternatingSums(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val finalValue: MutableList<Int> = arrayListOf(0,0)
+        for (i in 0 until a.size) if(i%2 == 0) finalValue[0]+= a[i] else finalValue[1]+= a[i]
+        return finalValue
     }
 
     /**
      * Given a rectangular matrix of characters, add a border of asterisks(*) to it.
      */
     fun addBorder(picture: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        val firstBoxSide = picture[0].length + 2
+        val point = "*"
+
+        val border: MutableList<String> = arrayListOf(point.repeat(firstBoxSide))
+        for(i in 0 until picture.size) border.add(point+picture[i]+point)
+        border.add(point.repeat(firstBoxSide))
+
+        return border
     }
 
     /**
@@ -24,7 +35,24 @@ object P4 {
      * pair of elements in one of the arrays. Given two arrays a and b, check whether they are similar.
      */
     fun areSimilar(a: MutableList<Int>, b: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        var swapped = 0
+        for(i in 0 until b.size){
+            if(a[i]!= b[i] && swapped >= 1) return false
+
+            if(a[i]!= b[i]){
+                for(j in 0 until b.size){
+                    if(a[i] == b[j] && b[i] == a[j]){
+                        val current = b[i]
+                        val temp = b[j]
+                        b[i] = temp
+                        b[j] = current
+                        swapped++
+                    }
+                }
+            if(swapped == 0) return false
+            }
+        }
+    return true
     }
 
     /**
@@ -33,14 +61,35 @@ object P4 {
      * increasing sequence from the input.
      */
     fun arrayChange(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var i = 0
+        var count = 0
+
+        while(true){
+            if (inputArray[i]>= inputArray[i + 1]){
+                ++inputArray[i+1]
+                ++count
+            } else ++i
+            if (i == inputArray.size - 1) break
+        }
+        return count
     }
+
 
     /**
      * Given a string, find out if its characters can be rearranged to form a palindrome.
      */
     fun palindromeRearranging(inputString: String): Boolean {
-        TODO("not implemented")
+        val occurrences = inputString.filter{ it in inputString}
+            .groupingBy { it }
+            .eachCount().toList()
+        var odd = 0
+
+        for (i in 0 until occurrences.size){
+            val value:Int = occurrences[i].toList()[1].toString().toInt()
+            if(value%2 != 0 ) odd++
+            if (odd > 1) return false
+        }
+        return true
     }
 
 }

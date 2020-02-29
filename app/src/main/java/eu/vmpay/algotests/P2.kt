@@ -9,7 +9,15 @@ object P2 {
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var largeProduct: Int = inputArray[0] * inputArray[1]
+
+        for (index in 1 until inputArray.size - 1) {
+            val product = inputArray[index]* inputArray[index+1]
+
+            if (product > largeProduct) largeProduct = product
+        }
+        return largeProduct
+
     }
 
     /**
@@ -27,7 +35,11 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        TODO("not implemented")
+        if (n == 1) {
+            return 1
+        } else {
+            return 4 + 4*(n - 2) + shapeArea(n - 1)
+        }
     }
 
     /**
@@ -40,7 +52,9 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        val extraStatues = statues.sorted()
+
+        return extraStatues.last() - extraStatues.first() - extraStatues.size + 1
     }
 
     /**
@@ -55,9 +69,30 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        return if(check(sequence.toMutableList(), 0))
+            true
+        else (check(sequence.toMutableList(), 1))
+
     }
 
+    private fun check(sequence: MutableList<Int>, j: Int): Boolean {
+        var lastTime = false
+        for(i in 1 until sequence.size) {
+            if (sequence[i] <= sequence[i - 1])
+                if(lastTime)
+                    return false
+                else {
+                    lastTime = true
+                    sequence.removeAt( i - j)
+                    break
+                }
+        }
+        for(i in 1 until sequence.size) {
+            if (sequence[i] <= sequence[i - 1])
+                return false
+        }
+        return true
+    }
     /**
      * After becoming famous, the CodeBots decided to move into a new building together.
      * Each of the rooms has a different cost, and some of them are free, but there's a rumour that
@@ -81,7 +116,26 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+        var roomCost: Int = matrix[0].sumBy { Int -> Int }
+        val listOfIndex: MutableList<MutableList<Int>>  = arrayListOf(arrayListOf())
+
+        for (i in 0 until matrix[0].size) {
+            if (matrix[0][i] != 0) listOfIndex[0].add(i)
+        }
+
+        for (i in 1 until matrix.size) {
+            var j = 0
+            while (j != listOfIndex[0].size) {
+               if (matrix[i][listOfIndex[0][j]] == 0) {
+                   listOfIndex[0].removeAt(j)
+                   j-=1
+               } else {
+                   roomCost+= matrix[i][listOfIndex[0][j]]
+               }
+           j+=1
+           }
+       }
+        return roomCost
     }
 
 }
