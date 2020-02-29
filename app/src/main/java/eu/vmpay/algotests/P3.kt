@@ -148,12 +148,4 @@ object P3 {
         return returnn
 
     }
-
-    fun findIndexClosingBracket(inputString: String, startIndex: Int): Int{
-        for(index in startIndex until  inputString.length){
-            if(inputString[index] == ')')
-                return index
-        }
-        return 0
-    }
 }
