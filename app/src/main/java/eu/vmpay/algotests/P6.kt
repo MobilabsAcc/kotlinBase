@@ -13,3 +13,81 @@ package eu.vmpay.algotests
  *
  * Goal: implement the ship, engine, person, restaurant, bar, cabin classes reflecting the above case.
  */
+
+class Ship() {
+    val crewMembers = arrayOfNulls<Crew>(50)
+    val captain = Captain("", "", 40, true)
+    val tourist = arrayOfNulls<Tourist>(350)
+    val places = listOf<Place>(Place.BAR, Place.BIGGERROOM, Place.RESTAURANT, Place.SMALLERROOM)
+}
+
+enum class Engine(val power: Int) {
+    MAXPOWER(4),
+    MINPOWER(2);
+}
+
+enum class Place(var capacity: Int) {
+    RESTAURANT(300),
+    BAR(50),
+    BIGGERROOM(4),
+    SMALLERROOM(2);
+}
+
+abstract class Person(
+    val firstName: String,
+    val lastName: String,
+    val age: Int,
+    val isCrew: Boolean
+) {
+}
+
+class Crew(firstName: String, lastName: String, age: Int, isCrew: Boolean = true) :
+    Person(firstName, lastName, age, isCrew) {
+}
+
+class Captain(firstName: String, lastName: String, age: Int, isCrew: Boolean) :
+    Person(firstName, lastName, age, isCrew) {
+    var isWorking = false
+
+    fun turnOnEngine(type: Engine) {
+        isWorking = true
+    }
+
+    fun shutDownEngine(type: Engine) {
+        isWorking = false
+    }
+}
+
+class Tourist(firstName: String, lastName: String, age: Int, val currentPlace: Place) :
+    Person(firstName, lastName, age, isCrew = false) {
+    private val friends = mutableListOf<Person>()
+
+    fun makeFriend(person: Tourist) {
+        friends.add(person)
+    }
+
+    fun removeFriend(person: Tourist) {
+        friends.remove(person)
+    }
+
+    fun enterNewPlace(place: Place) {
+        if (place.capacity == 0) {
+            println("This place is full")
+        } else {
+            if (place == Place.BAR && age < 18) {
+                println("You have to at least 18 years old to enter the bar")
+            }
+        }
+        place.capacity++
+    }
+
+    fun leavePlace(place: Place) {
+        place.capacity++
+    }
+
+    fun changePlaces(from: Place, to: Place) {
+        leavePlace(from)
+        enterNewPlace(to)
+    }
+
+}

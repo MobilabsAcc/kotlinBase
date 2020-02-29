@@ -8,7 +8,20 @@ object P3 {
      * allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
      */
     fun allLongestStrings(inputArray: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        var maxLength = inputArray[0].length
+        val resultList: MutableList<String> = mutableListOf()
+
+        for (i in inputArray){
+            if(i.length > maxLength){
+                maxLength = i.length
+            }
+        }
+        for(i in inputArray){
+            if(i.length == maxLength){
+                resultList.add(i)
+            }
+        }
+        return resultList
     }
 
     /**
@@ -16,8 +29,27 @@ object P3 {
      * For s1 = "aabcc" and s2 = "adcaa", the output should be commonCharacterCount(s1, s2) = 3.
      * Strings have 3 common characters - 2 "a"s and 1 "c".
      */
-    fun commonCharacterCount(s1: String, s2: String): Int {
-        TODO("not implemented")
+    fun commonCharacterCount(s1: String, s2: String): Int{
+
+        val s1CharsArray: ArrayList<Char> = ArrayList()
+        val s2CharsArray: ArrayList<Char> = ArrayList()
+
+        for (character in s1.toCharArray()) {
+            s1CharsArray.add(character)
+        }
+
+        for (character in s2.toCharArray()) {
+            s2CharsArray.add(character)
+        }
+
+        var commonLetters = 0
+        for (i in s2CharsArray) {
+            if (s1CharsArray.contains(i)) {
+                s1CharsArray.remove(i)
+                commonLetters++
+            }
+        }
+        return commonLetters
     }
 
     /**
@@ -28,7 +60,38 @@ object P3 {
      * For n = 239017, the output should be isLucky(n) = false.
      */
     fun isLucky(n: Int): Boolean {
-        TODO("not implemented")
+        var equals = false
+        val numberOfDigits = n.toString().length
+
+        if (numberOfDigits.rem(2) != 0) {
+            equals = false
+        } else {
+            var baseDivider = 10
+
+            while (n.div(baseDivider) > baseDivider) {
+                baseDivider *= 10
+            }
+
+            var leftNumber = n.div(baseDivider)
+            var rightNumber = n.rem(baseDivider)
+            var sumInLeftNumber = 0
+            var sumInRightNumber = 0
+
+            while (leftNumber != 0) {
+                sumInLeftNumber += leftNumber.rem(10)
+                leftNumber /= 10
+            }
+
+            while (rightNumber != 0) {
+                sumInRightNumber += rightNumber.rem(10)
+                rightNumber /= 10
+            }
+
+            if (sumInLeftNumber == sumInRightNumber) {
+                equals = true
+            }
+        }
+        return equals
     }
 
     /**
@@ -39,7 +102,25 @@ object P3 {
      * the output should be sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
      */
     fun sortByHeight(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val listOfTrees: ArrayList<Int> = ArrayList()
+        val listOfPeople: ArrayList<Int> = ArrayList()
+        val indexesOfTrees: ArrayList<Int> = ArrayList()
+
+        for (i in 0 until a.size) {
+            if (a[i] == -1) {
+                listOfTrees.add(a[i])
+                indexesOfTrees.add(i)
+            } else {
+                listOfPeople.add(a[i])
+                listOfPeople.sort()
+            }
+        }
+
+        for(i in 0 until indexesOfTrees.size){
+            listOfPeople.add(indexesOfTrees[i], -1)
+        }
+
+        return listOfPeople.toMutableList()
     }
 
     /**
@@ -55,6 +136,15 @@ object P3 {
      * Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
      */
     fun reverseInParentheses(inputString: String): String {
-        TODO("not implemented")
+        var result: String = ""
+
+        while(inputString.contains("(")){
+            val start = inputString.lastIndexOf("(")
+            val end = inputString.indexOf(")", inputString.lastIndexOf("("))
+
+            result = inputString.substring(0, start) + inputString.substring(start + 1, end).reversed() +
+                    inputString.substring(end + 1, inputString.length)
+        }
+        return result
     }
 }

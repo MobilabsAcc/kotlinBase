@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import kotlin.math.pow
+
 object P2 {
 
     /**
@@ -27,9 +29,11 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        val base: Double = 2.00
-        val area = base.pow(n.toDouble())
-        return (shapeArea(n) + shapeArea(n - 1))
+        var sum = n.times(2) - 1
+        for (i in 1 until sum step 2) {
+            sum += 2.times(i)
+        }
+        return sum
     }
 
     /**
@@ -42,17 +46,13 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        var min = statues[0]
-        var max = statues[0]
+        val min = statues.min()
+        val max = statues.max()
+        var result = 0
 
-        for (i in 1 until statues.size){
-            if(statues[i] > max){
-                max = statues[i]
-            }
-            if(statues[i] < min){
-                min = statues[i]
-            }
-        }
+        if (min != null && max != null)
+            result = max - min
+        return result - statues.size + 1
     }
 
     /**
