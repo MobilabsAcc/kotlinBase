@@ -12,7 +12,7 @@ object P2 {
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
         var max = inputArray[0]*inputArray[1]
-        for (i in 2 until inputArray.size - 1) {
+        for (i in 1 until inputArray.size-1) {
             if(inputArray[i]*inputArray[i+1] > max)
                 max = inputArray[i]*inputArray[i+1]
         }
@@ -73,7 +73,34 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        if(sequence.size == 1)
+            return true
+        var removed = false
+        var fail = false
+        var current: Int = sequence[0]
+        for(i in 1 until sequence.size) {
+            if(sequence[i] <= current && removed.not()) {
+                removed = true
+                continue
+            }
+            if(sequence[i] <= current && removed)
+                fail = true
+            current = sequence[i]
+        }
+        if(fail.not())
+            return true
+        current = sequence.last()
+        removed = false
+        for(i in sequence.size - 2 downTo 0) {
+            if(sequence[i] >= current && removed.not()) {
+                removed = true
+                continue
+            }
+            if(sequence[i] >= current && removed)
+                return false
+            current = sequence[i]
+        }
+        return true
     }
 
     /**
@@ -99,7 +126,16 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+        var sum = 0
+        val excluded = mutableListOf<Int>()
+        for(i in 0 until matrix.size){
+            for(j in 0 until matrix[i].size){
+                if(matrix[i][j] == 0)
+                    excluded.add(j)
+                if(excluded.contains(j).not())
+                    sum+=matrix[i][j]
+            }
+        }
+        return sum
     }
-
 }
