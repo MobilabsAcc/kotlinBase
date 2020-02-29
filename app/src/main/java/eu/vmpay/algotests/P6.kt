@@ -23,7 +23,7 @@ class Ship() {
     val engines = listOf(Engine.smallerEngine, Engine.biggerEngine)
     val Crew = arrayOfNulls<shipCrewPerson>(50)
     val tourists = arrayOfNulls<Person>(350)
-    val places = listOf(Place.Bar, Place.Bar, listOf<Place>())
+    val places = listOf(Place.Bar, Place.Bar, listOf<Place.smallerCabin>(), listOf < Place.biggerCabin())
 }
 
 enum class Engine(val power: Int) {
@@ -34,26 +34,13 @@ enum class Engine(val power: Int) {
 }
 
 enum class Place(var capacity: Int) {
-    smallerCarbin(2),
+    smallerCabin(2),
     biggerCabin(4),
     Bar(50),
     Restaurant(300);
 
     val people = mutableListOf<Tourist>()
 
-    fun enterPlace(tourist: Tourist) {
-        if (capacity == 0)
-            throw Exception("this place is full, nobody can enter here")
-
-        if (this == Bar && tourist.age < 18)
-            throw Exception("this tourist is not allowed to enter this attraction")
-        capacity--
-    }
-
-    fun leavePlace(tourist: Tourist) {
-        people.remove(tourist)
-        capacity++
-    }
 }
 
 open class Person(val name: String, val surname: String) {}
@@ -66,4 +53,35 @@ class Captain(name: String, surname: String, val ship: Ship) : Person(name, surn
     }
 }
 
-class Tourist(name: String, surname: String, val age: Int, frineds: List<Tourist>, var currentPlace: String = "") : Person(name, surname) {}
+class Tourist(val name: String, val surname: String, val age: Int, val currentPlace: Place = null) : Person(name, surname) {
+    val friends = mutableListOf<Person>()
+
+    fun addFriend(tourist: Tourist) {
+        friends.add(tourist)
+    }
+
+    fun removeFriend(tourist: Tourist) {
+        friends.remove(tourist)
+
+    }
+
+    fun move(from: Place, to: Place) {
+        if (currentPlace != null)
+            leavePlace(from)
+        enterPlace(to)
+    }
+
+    fun enterPlace(place: Place) {
+        if (place.capacity == 0)
+            throw Exception("this place is full, nobody can enter here")
+
+        if (place == Place.Bar && age < 18)
+            throw Exception("you can't entered here")
+        place.capacity--
+    }
+
+    fun leavePlace(place: Place) {
+        capacity++
+    }
+
+}
