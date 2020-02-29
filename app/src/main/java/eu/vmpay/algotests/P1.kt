@@ -18,7 +18,7 @@ object P1 {
      */
     fun centuryFromYear(year: Int): Int {
         val years = year % 100
-        return ((year - years) / 100) + if (years > 0) 1 else 0
+        return (year / 100) + if (years > 0) 1 else 0
     }
 
     /**

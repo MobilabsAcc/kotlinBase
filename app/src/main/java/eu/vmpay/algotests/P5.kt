@@ -11,3 +11,67 @@ package eu.vmpay.algotests
  *
  * Goal: implement the bakery, donut, topping, order abstractions reflecting the above case.
  */
+
+
+/**
+ * Team:
+ * Paweł Barszcz
+ * Ryszard Eggink
+ * Marcin Żyżyński
+ */
+class Bakery {
+    val name = "Cukiernia - ACC"
+
+    val orders = mutableListOf<Order>()
+
+    fun make(order: Order): Donut {
+        println(order.getPriceWithToppings())
+        orders.add(order)
+        return Donut(order.donutSize, order.topping)
+    }
+
+    fun getAveragePrice(): Double {
+        return orders.sumByDouble {it.getPriceWithToppings()} / orders.size
+    }
+}
+
+data class Order(val donutSize: DonutSize, val topping: Topping? = null) {
+    fun getPriceWithToppings(): Double {
+        return donutSize.price + (topping?.price ?: 0.0)
+    }
+}
+
+class Donut(private val donutSize: DonutSize, private val topping: Topping?) {
+
+    override fun toString(): String {
+        return "$donutSize donut with $topping"
+    }
+}
+
+enum class DonutSize(val price: Double) {
+    STANDART(2.0),
+    EXTRA_LARGE(3.5);
+}
+
+
+enum class Topping(val price: Double) {
+    CRANBERRY(1.0),
+    BLUEBERRY(1.0),
+    RASPBERRY(1.0),
+    STRAWBERRY(1.0),
+    NUTELLA(1.0);
+}
+
+
+fun main() {
+    val bakery = Bakery()
+
+    println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.NUTELLA)))
+    println(bakery.make(Order(DonutSize.STANDART, Topping.BLUEBERRY)))
+    println(bakery.make(Order(DonutSize.STANDART, Topping.STRAWBERRY)))
+    println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.RASPBERRY)))
+    println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.CRANBERRY)))
+
+    println("Average price")
+    println(bakery.getAveragePrice())
+}

@@ -62,7 +62,30 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO()
+        fun check(sequence: MutableList<Int>): Int {
+            for (i in 0 until sequence.size - 1) {
+               if (sequence[i] >= sequence[i + 1])  {
+                   return i
+               }
+            }
+            return -1
+        }
+        val position = check(sequence)
+        if (position == -1) {
+            return true
+        } else {
+            val firstList = sequence.toMutableList()
+            firstList.removeAt(position)
+            if (check(firstList) == -1) {
+                return true
+            }
+            val secondList = sequence.toMutableList()
+            secondList.removeAt(position + 1)
+            if (check(secondList) == -1) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -90,7 +113,7 @@ object P2 {
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
         var sum = 0
         val badColumns = HashSet<Int>()
-        for ((i, values) in matrix.withIndex()) {
+        for (values in matrix) {
             for ((j, value) in values.withIndex()) {
                 if (value == 0) {
                     badColumns.add(j)

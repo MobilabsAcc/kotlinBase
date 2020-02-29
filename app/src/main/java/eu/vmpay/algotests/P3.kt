@@ -8,7 +8,13 @@ object P3 {
      * allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
      */
     fun allLongestStrings(inputArray: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        var maxLength = 0
+        for (item in inputArray) {
+            if (item.length > maxLength) {
+                maxLength = item.length
+            }
+        }
+        return inputArray.filter { it.length == maxLength } as MutableList<String>
     }
 
     /**
@@ -17,7 +23,18 @@ object P3 {
      * Strings have 3 common characters - 2 "a"s and 1 "c".
      */
     fun commonCharacterCount(s1: String, s2: String): Int {
-        TODO("not implemented")
+        val characterMap = HashMap<Char, Int>()
+        s1.forEach {
+            characterMap[it] = (characterMap[it] ?: 0) + 1
+        }
+        var counter = 0
+        s2.forEach {
+            if (characterMap.containsKey(it) && characterMap[it] ?: 0 > 0) {
+                counter += 1
+                characterMap[it] = (characterMap[it] ?: 0) - 1
+            }
+        }
+        return counter
     }
 
     /**
@@ -28,7 +45,11 @@ object P3 {
      * For n = 239017, the output should be isLucky(n) = false.
      */
     fun isLucky(n: Int): Boolean {
-        TODO("not implemented")
+        val nString = n.toString()
+        val nLength = nString.length
+        val firstHalf = nString.subSequence(0, nLength / 2)
+        val secondHalf = nString.subSequence(nLength / 2, nLength)
+        return firstHalf.sumBy { it.toInt() } == secondHalf.sumBy { it.toInt() }
     }
 
     /**
@@ -39,7 +60,19 @@ object P3 {
      * the output should be sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
      */
     fun sortByHeight(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val indexes = mutableListOf<Int>()
+        val people = mutableListOf<Int>()
+        a.forEachIndexed { index, person ->
+            if (person != -1) {
+                indexes.add(index)
+                people.add(person)
+            }
+        }
+        people.sort()
+        indexes.zip(people).forEach {(index, person) ->
+            a[index] = person
+        }
+        return a
     }
 
     /**
@@ -55,6 +88,25 @@ object P3 {
      * Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
      */
     fun reverseInParentheses(inputString: String): String {
-        TODO("not implemented")
+        fun reverse(inputString: String): String {
+            val regex = Regex("[(][a-z]*[)]")
+            val result = regex.find(inputString, 0)
+            if (result != null) {
+                return inputString.replace(
+                    result.value,
+                    result.value.reversed().substring(1, result.value.length - 1)
+                )
+            }
+            return inputString
+        }
+        var resultString = inputString
+        while(true) {
+            val newResultString = reverse(resultString)
+            if (newResultString == resultString) {
+                break
+            }
+            resultString = newResultString
+        }
+        return resultString
     }
 }
