@@ -32,7 +32,8 @@ object P2 {
      *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        TODO("not implemented")
+
+        return n*n + (n-1)*(n-1)
     }
 
     /**
@@ -45,7 +46,16 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+
+        var min = statues[0]
+        var max = statues[0]
+
+       for (i: Int in 1 until statues.size){
+           if(statues[i] > max) max = statues[i]
+           if(statues[i] < min) min = statues[i]
+       }
+
+        return  max - min - statues.size + 1
     }
 
     /**
@@ -60,7 +70,37 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+
+        var i = 1
+        var size = sequence.size
+
+        while ( i in 1 until sequence.size - 1){
+
+            if (sequence[i - 1] >= sequence[i] ){
+                if(sequence[i] >= sequence[i + 1]){
+
+                    sequence.removeAt(i)
+                    i--
+
+                }else{
+                    sequence.removeAt(i - 1)
+
+                }
+
+            }else{
+
+                if(sequence[i] >= sequence[i + 1] ){
+                    if(sequence[i - 1] < sequence[i + 1])   sequence.removeAt(i )
+                    else                                    sequence.removeAt(i + 1)
+                    i--
+                }
+            }
+
+            i++
+        }
+
+        return size == sequence.size || size - 1 == sequence.size
+
     }
 
     /**
@@ -86,7 +126,28 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+
+        var i = 0
+
+        var tmpList = HashSet<Int>()
+        var result = 0
+
+        while (i < matrix.size){
+
+            var j = 0
+
+            while (j < matrix[i].size){
+
+                if(!tmpList.contains(j)) {
+
+                    if (matrix[i][j] == 0)  tmpList.add(j)
+                    else                            result += matrix[i][j]
+                }
+                j++
+            }
+            i++
+        }
+        return result
     }
 
 }

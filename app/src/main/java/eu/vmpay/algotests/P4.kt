@@ -1,5 +1,6 @@
 package eu.vmpay.algotests
 
+
 object P4 {
     /**
      * Several people are standing in a row and need to be divided into two teams.
@@ -9,14 +10,40 @@ object P4 {
      * team 1, and the second element is the total weight of team 2 after the division is complete.
      */
     fun alternatingSums(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        var weightLeft = 0
+        var weightRight = 0
+
+        for (i: Int in 0 until a.size){
+            if(i % 2 == 0)  weightLeft += a[i]
+            else            weightRight += a[i]
+        }
+
+        return mutableListOf(weightLeft, weightRight)
     }
 
     /**
      * Given a rectangular matrix of characters, add a border of asterisks(*) to it.
      */
     fun addBorder(picture: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        var resultList = ArrayList<String>()
+
+        val size = picture.size + 2
+        val howManyInRow = picture[0].length + 2
+
+        for (i: Int in 0 until size){
+
+            if (i == 0 || i == size-1){
+
+                var tmp = ""
+
+                for (j: Int in 0 until howManyInRow){
+                    tmp += "*"
+                }
+                resultList.add(tmp)
+            }else
+                resultList.add("*" + picture[i - 1] + "*")
+        }
+        return resultList
     }
 
     /**
@@ -24,7 +51,34 @@ object P4 {
      * pair of elements in one of the arrays. Given two arrays a and b, check whether they are similar.
      */
     fun areSimilar(a: MutableList<Int>, b: MutableList<Int>): Boolean {
-        TODO("not implemented")
+
+        var tmp = 0
+
+        for(i: Int in 0 until a.size){
+            if (a[i] != b[i])   {
+                if(findAndSwap(b, a[i], i)) {
+                    tmp++
+                    if (tmp > 1)    return false
+                }else
+                    return false
+            }
+        }
+        return true
+
+    }
+
+    fun findAndSwap(arr: MutableList<Int>,x: Int, from: Int) : Boolean{
+
+        for (i: Int in from + 1 until arr.size){
+            if(arr[i] == x){
+
+                var tmp = arr[from]
+                arr[from] = arr[i]
+                arr[i]  = tmp
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -33,14 +87,42 @@ object P4 {
      * increasing sequence from the input.
      */
     fun arrayChange(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+
+        var howMany = 0
+
+        for (i: Int in 1 until inputArray.size){
+
+            if (inputArray[i] <= inputArray[i - 1]){
+
+                howMany += inputArray[i - 1] - inputArray[i] + 1
+                inputArray[i] = inputArray[i - 1] + 1
+            }
+        }
+        return howMany
     }
 
     /**
      * Given a string, find out if its characters can be rearranged to form a palindrome.
      */
     fun palindromeRearranging(inputString: String): Boolean {
-        TODO("not implemented")
+
+        var map = HashMap<Char, Int>()
+
+        for (i: Char in inputString){
+            if(!map.containsKey(i)) map.put(i, 1)
+            else                    map.set(i, map.getValue(i) + 1)
+        }
+
+        var alert = 0
+
+        for (i: Char in map.keys){
+            if (map[i]?.rem(2) ?: 1 != 0)    {
+                alert++
+                if (alert > 1)  return false
+            }
+        }
+
+        return true
     }
 
 }
