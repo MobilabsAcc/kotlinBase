@@ -13,41 +13,37 @@ package eu.vmpay.algotests
  */
 
 
-class Bakery( var numberOfDonuts:Int){
+class Bakery(var numberOfDonuts: Int) {
     val orders = mutableListOf<Order>()
 
-    fun makeOrder(donut: Donut,time:String): String{
-        if(numberOfDonuts == 0)
+    fun makeOrder(donut: Donut, time: String): String {
+        if (numberOfDonuts == 0)
             return "Out of donuts"
-        orders.add(Order(donut,time))
+        orders.add(Order(donut, time))
         numberOfDonuts--
 
         return "Have a nice day"
     }
 
-    fun showOrders(){
+    fun showOrders() {
         for (i in 0..orders.lastIndex)
             println(orders[i].price.toString() + orders[i].time)
     }
 }
 
-class Donut (val size: SizeOfDonut, val toppings: List<Topping>){
+class Donut(val size: SizeOfDonut, val toppings: List<Topping>) {}
 
-
-}
-
-class Order(donut: Donut, val time:String){
+class Order(donut: Donut, val time: String) {
     val price = donut.size.price + donut.toppings.sumByDouble { it.price }
-
 }
 
 
-enum class SizeOfDonut(val price: Double){
+enum class SizeOfDonut(val price: Double) {
     standard(2.0),
     extraLarge(3.5),
 }
 
-enum class Topping (val price: Double) {
+enum class Topping(val price: Double) {
     cranberry(1.0),
     blueberry(1.0),
     raspberry(1.0),

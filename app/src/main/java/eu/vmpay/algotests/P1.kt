@@ -17,13 +17,13 @@ object P1 {
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
     fun centuryFromYear(year: Int): Int {
-        val last = year%10
-        val main = year/100
+        val last = year % 10
+        val main = year / 100
 
-        if(last == 0)
+        if (last == 0)
             return main
 
-        return main +1
+        return main + 1
     }
 
     /**

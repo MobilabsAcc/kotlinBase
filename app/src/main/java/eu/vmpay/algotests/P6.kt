@@ -1,7 +1,5 @@
 package eu.vmpay.algotests
 
-
-
 import java.lang.Exception
 import java.lang.RuntimeException
 import java.util.*
@@ -21,47 +19,51 @@ import java.util.*
  */
 
 
-class Ship(){
-    val engines = listOf(Engine.smallerEngine,Engine.biggerEngine)
+class Ship() {
+    val engines = listOf(Engine.smallerEngine, Engine.biggerEngine)
     val Crew = arrayOfNulls<shipCrewPerson>(50)
     val tourists = arrayOfNulls<Person>(350)
-    val places = listOf(Place.Bar,Place.Bar, listOf<Place>())
+    val places = listOf(Place.Bar, Place.Bar, listOf<Place>())
 }
 
-enum class Engine(val power:Int){
+enum class Engine(val power: Int) {
     biggerEngine(2),
     smallerEngine(4);
+
     var work: Boolean = false
 }
 
-enum class Place(var capacity :Int){
+enum class Place(var capacity: Int) {
     smallerCarbin(2),
     biggerCabin(4),
     Bar(50),
     Restaurant(300);
+
     val people = mutableListOf<Tourist>()
 
     fun enterPlace(tourist: Tourist) {
-        if( capacity == 0)
+        if (capacity == 0)
             throw Exception("this place is full, nobody can enter here")
 
         if (this == Bar && tourist.age < 18)
             throw Exception("this tourist is not allowed to enter this attraction")
         capacity--
     }
-    fun leavePlace(tourist: Tourist){
+
+    fun leavePlace(tourist: Tourist) {
         people.remove(tourist)
         capacity++
     }
 }
-open class Person(val name: String, val surname:String){}
 
-class shipCrewPerson(name: String, surname:String, val salary:Int): Person(name,surname){}
+open class Person(val name: String, val surname: String) {}
 
-class Captain(name: String, surname:String, val ship: Ship): Person(name,surname) {
-    fun work(work: Boolean){
+class shipCrewPerson(name: String, surname: String, val salary: Int) : Person(name, surname) {}
+
+class Captain(name: String, surname: String, val ship: Ship) : Person(name, surname) {
+    fun work(work: Boolean) {
         ship.engines.map { it.work = work }
     }
 }
 
-class Tourist(name: String, surname:String, val age: Int, frineds: List<Tourist>, var currentPlace: String = ""): Person(name,surname){}
+class Tourist(name: String, surname: String, val age: Int, frineds: List<Tourist>, var currentPlace: String = "") : Person(name, surname) {}
