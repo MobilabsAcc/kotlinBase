@@ -74,8 +74,27 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        var sequenceCopy: MutableList<Int>
+        for (index in 0 until sequence.size){
+            sequenceCopy = sequence.toMutableList()
+            sequenceCopy.removeAt(index)
+            if(checkIncreasing(sequenceCopy)){
+                return true
+            }
+        }
+        return false
     }
+
+    fun checkIncreasing(sequence2: MutableList<Int>): Boolean{
+        for (index in 1 until sequence2.size){
+            when{
+                sequence2[index-1] >= sequence2[index] -> return false
+            }
+        }
+        return true
+    }
+
+
 
     /**
      * After becoming famous, the CodeBots decided to move into a new building together.
