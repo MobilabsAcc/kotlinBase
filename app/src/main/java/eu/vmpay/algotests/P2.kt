@@ -10,7 +10,7 @@ object P2 {
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
         var max = inputArray[0] * inputArray[1]
-        for (i in 0 until inputArray.size - 1) {
+        for (i in 1 until inputArray.size - 1) {
             if(inputArray[i] * inputArray[i+1] > max)
                 max = inputArray[i] * inputArray[i+1]
         }
@@ -100,7 +100,19 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+        var excluded = mutableListOf<Int>()
+        var sum = 0
+        for (i in matrix) {
+            for ((indexJ, j) in i.withIndex()) {
+                when (j) {
+                    0 -> excluded.add(indexJ)
+                }
+                when (indexJ) {
+                    !in excluded -> sum+=j
+                }
+            }
+        }
+        return sum
     }
 
 }
