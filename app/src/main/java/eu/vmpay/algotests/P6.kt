@@ -13,3 +13,172 @@ package eu.vmpay.algotests
  *
  * Goal: implement the ship, engine, person, restaurant, bar, cabin classes reflecting the above case.
  */
+
+class Engine constructor(val power: Int, private var isWorking: Boolean = false){
+
+    fun start(){
+        isWorking = true
+    }
+
+    fun stop(){
+        isWorking = false
+    }
+
+}
+
+abstract class Person(val name:String, val lastName: String, val age: Int)
+
+class Tourist (name:String,lastName: String, age: Int): Person(name, lastName, age){
+
+    private var friends = mutableListOf<Tourist>()
+
+    fun addFreind(friend: Tourist){
+        friends.add(friend)
+    }
+
+    fun removeFreind(friend: Tourist){
+        friends.remove(friend)
+    }
+
+    fun showFriends(){
+        for(element in friends){
+            println("Friend: ${element.name} ${element.lastName}, age ${element.age}")
+        }
+    }
+
+}
+
+class Crew (name:String,lastName: String, age: Int): Person(name, lastName, age)
+
+abstract class Room(val name:String, val capacity: Int){
+    abstract fun addMember(person: Person)
+    abstract fun removeMember(person: Person)
+    abstract fun showMembers()
+}
+
+class Restaurant(name:String, capacity: Int): Room(name, capacity){
+
+    private val members = mutableListOf<Person>()
+
+    override fun addMember(person: Person){
+        if(members.size < capacity) {
+            members.add(person)
+            println("Person entered")
+        }else{
+            println("Restaurant is full")
+        }
+    }
+
+    override fun removeMember(person: Person){
+        members.remove(person)
+    }
+
+    override fun showMembers(){
+        for(element in members){
+            println("In bar : ${element.name} ${element.lastName}, age ${element.age}")
+        }
+    }
+}
+
+class Bar(name:String, capacity: Int): Room(name, capacity){
+
+    private val members = mutableListOf<Person>()
+
+    override fun addMember(person: Person){
+        if(members.size < capacity){
+            if(person.age >= 18){
+                members.add(person)
+                println("Person entered")
+            }else{
+                println("Person is too young")
+            }
+        }else{
+            println("Bar is full")
+        }
+    }
+
+    override fun removeMember(person: Person){
+        members.remove(person)
+    }
+
+    override fun showMembers(){
+        for(element in members){
+            println("In bar : ${element.name} ${element.lastName}, age ${element.age}")
+        }
+    }
+
+}
+
+class Cabin(name:String, capacity: Int): Room(name, capacity){
+
+    private val members = mutableListOf<Person>()
+
+    override fun addMember(person: Person){
+        if(members.size < capacity){
+            members.add(person)
+            println("Member added to cabin")
+        }else{
+            println("Cabin is full")
+        }
+    }
+
+    override fun removeMember(person: Person){
+        members.remove(person)
+    }
+
+    override fun showMembers(){
+        for(element in members){
+            println("Melded in cabin: ${element.name} ${element.lastName}, age ${element.age}")
+        }
+    }
+
+}
+
+class Ship(private val capacityTourist: Int, private val capacityCrew: Int){
+    private val tourists = mutableListOf<Tourist>()
+    private val crewMembers = mutableListOf<Crew>()
+    private val engine1 = Engine(2)
+    private val engine2 = Engine(4)
+    val bar1 = Bar("Bar1", 50)
+    val bar2 = Bar("Bar2", 50)
+    val restaurant1 = Restaurant("Restaurant1", 300)
+    val cabins = mutableListOf<Cabin>()
+
+    fun addTourist(tourist: Tourist){
+        if(tourists.size < capacityTourist){
+            tourists.add(tourist)
+            println("Tourist added to ship")
+        }else{
+            println("Ship is full")
+        }
+    }
+
+    fun removeToursit(tourist: Tourist){
+        tourists.remove(tourist)
+    }
+
+    fun showTourists(){
+        for(tourist in tourists){
+            println("Tourist: ${tourist.name} ${tourist.lastName}, age ${tourist.age}")
+        }
+    }
+
+    fun addCrew(crew: Crew){
+        if(crewMembers.size < capacityCrew){
+            crewMembers.add(crew)
+            println("Crew member added to ship")
+        }else{
+            println("Ship is full")
+        }
+    }
+
+    fun removeToursit(crew: Crew){
+        crewMembers.remove(crew)
+    }
+
+    fun showCrew(){
+        for(crew in crewMembers){
+            println("Tourist: ${crew.name} ${crew.lastName}, age ${crew.age}")
+        }
+    }
+}
