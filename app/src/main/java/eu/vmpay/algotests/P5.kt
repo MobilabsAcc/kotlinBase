@@ -14,6 +14,8 @@ package eu.vmpay.algotests
 
 class Bakery {
 
+    // GRUPA: Eryk, Robert, Gosia
+
     var amountOrders = 0
     var valueOfOrders = 0.0
 
