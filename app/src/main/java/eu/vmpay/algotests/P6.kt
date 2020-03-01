@@ -91,6 +91,12 @@ class Ship {
             }
         }
     }
+
+    fun getEnginePowerConsumption(): Int {
+        val engineA = if (engineA.isLaunched) engineA.power else 0
+        val engineB = if (engineB.isLaunched) engineB.power else 0
+        return engineA + engineB
+    }
 }
 
 enum class EnginePower {
