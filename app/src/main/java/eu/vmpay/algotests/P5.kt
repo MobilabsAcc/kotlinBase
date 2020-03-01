@@ -41,9 +41,9 @@ data class Order(
 
 interface IBakery {
 
-    fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double
+    fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double?
 
-    fun payOrder(price: Double): Order?
+    fun payOrder(price: Double?): Order?
 
     fun getAverageOrderPrice(): Double
 }
@@ -54,18 +54,18 @@ class Bakery : IBakery {
     private var revenue: Double = 0.0
     private var orderCount = 0
 
-    override fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double =
+    override fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double? =
             if (order == null) {
                 Order(donut, topping, orderType).let {
                     order = it
                     it.getPrice()
                 }
             } else {
-                -1.0
+                null
             }
 
-    override fun payOrder(price: Double): Order? =
-            if (order != null && order?.getPrice() == price) {
+    override fun payOrder(price: Double?): Order? =
+            if (order != null && price != null && order?.getPrice() == price) {
                 revenue += price
                 orderCount++
                 order.also { order = null }
@@ -73,5 +73,5 @@ class Bakery : IBakery {
                 null
             }
 
-    override fun getAverageOrderPrice(): Double = revenue / orderCount
+    override fun getAverageOrderPrice(): Double = if (orderCount == 0) 0.0 else revenue / orderCount
 }
