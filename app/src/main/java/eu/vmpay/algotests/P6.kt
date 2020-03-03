@@ -24,6 +24,11 @@ class Engine constructor(val power: Int, private var isWorking: Boolean = false)
         isWorking = false
     }
 
+    fun getIsWorking(): Boolean{
+        return isWorking
+    }
+
+
 }
 
 abstract class Person(val name:String, val lastName: String, val age: Int)
@@ -31,6 +36,10 @@ abstract class Person(val name:String, val lastName: String, val age: Int)
 class Tourist (name:String,lastName: String, age: Int): Person(name, lastName, age){
 
     private var friends = mutableListOf<Tourist>()
+
+    fun getFreinds(): MutableList<Tourist>{
+        return friends
+    }
 
     fun addFreind(friend: Tourist){
         friends.add(friend)
@@ -60,6 +69,10 @@ class Restaurant(name:String, capacity: Int): Room(name, capacity){
 
     private val members = mutableListOf<Person>()
 
+    fun getMembers(): MutableList<Person>{
+        return members
+    }
+
     override fun addMember(person: Person){
         if(members.size < capacity) {
             members.add(person)
@@ -83,6 +96,10 @@ class Restaurant(name:String, capacity: Int): Room(name, capacity){
 class Bar(name:String, capacity: Int): Room(name, capacity){
 
     private val members = mutableListOf<Person>()
+
+    fun getMembers(): MutableList<Person>{
+        return members
+    }
 
     override fun addMember(person: Person){
         if(members.size < capacity){
@@ -112,6 +129,10 @@ class Bar(name:String, capacity: Int): Room(name, capacity){
 class Cabin(name:String, capacity: Int): Room(name, capacity){
 
     private val members = mutableListOf<Person>()
+
+    fun getMembers(): MutableList<Person>{
+        return members
+    }
 
     override fun addMember(person: Person){
         if(members.size < capacity){
@@ -144,6 +165,14 @@ class Ship(private val capacityTourist: Int, private val capacityCrew: Int){
     val restaurant1 = Restaurant("Restaurant1", 300)
     val cabins = mutableListOf<Cabin>()
 
+    fun getTourists(): MutableList<Tourist>{
+        return tourists
+    }
+
+    fun getCrewMembers(): MutableList<Crew>{
+        return crewMembers
+    }
+
     fun addTourist(tourist: Tourist){
         if(tourists.size < capacityTourist){
             tourists.add(tourist)
@@ -172,7 +201,7 @@ class Ship(private val capacityTourist: Int, private val capacityCrew: Int){
         }
     }
 
-    fun removeToursit(crew: Crew){
+    fun removeCrew(crew: Crew){
         crewMembers.remove(crew)
     }
 
