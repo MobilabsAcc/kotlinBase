@@ -11,3 +11,23 @@ package eu.vmpay.algotests
  *
  * Goal: implement the bakery, donut, topping, order abstractions reflecting the above case.
  */
+class Bakery{
+     val name="piekarnia"
+}
+enum class Topping(val price: Double){
+    EMPTY( 0.0),
+    truskawkowy(3.0),
+    jagodowy(2.0)
+}
+enum class Donutsize(val price: Double){
+    duzy(3.0),
+    maly(1.0)
+}
+
+class Order(val topping: Topping, val donutsize: Donutsize){
+    fun getPrice()= donutsize.price+topping.price
+}
+class Donut(topping: Topping, donutsize: Donutsize){
+    val size=donutsize
+    val top=topping
+}

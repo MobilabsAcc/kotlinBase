@@ -7,7 +7,7 @@ object P1 {
      * For param1 = 1 and param2 = 2, the output should be add(param1, param2) = 3.
      */
     fun add(a: Int, b: Int): Int {
-        return a+b
+        return a + b
     }
 
     /**
@@ -17,12 +17,13 @@ object P1 {
      * For year = 1700, the output should be centuryFromYear(year) = 17.
      */
     fun centuryFromYear(year: Int): Int {
-        var x=0
-        for (y in 0..21) {
-            if (year / 100 >= y)
-                x = y
-        }
-        return x
+        if (year <= 100)
+            return 1
+        if (year % 100 == 0)
+            return year / 100
+        else
+            return year / 100 + 1
+
     }
 
     /**
@@ -32,16 +33,16 @@ object P1 {
      * For inputString = "a", the output should be checkPalindrome(inputString) = true.
      */
     fun checkPalindrome(inputString: String): Boolean {
-        var x=0
-        for (i in 0..inputString.length){
-            if (inputString.get(i) == inputString.get(inputString.length-i)) {
-                    x++
-                }
+        var x = 0
+        var wynik=false
+        println(inputString[0])
+        for (i in 0.. inputString.length-1) {
+            if (inputString[i] == inputString[inputString.length - i-1])
+                x++
         }
-        if (x==inputString.length){
-        return true
+        if (x == inputString.length) {
+            wynik=true
         }
-        else {
-            return false
-        }
-    }}
+        return wynik
+    }
+}
