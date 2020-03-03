@@ -25,7 +25,7 @@ class Ship {
 
 
     fun startEngine(engineIdx: Int): Boolean {
-        if (engineIdx !in 0..engines.size) {
+        if (engineIdx !in engines.indices) {
             println("Error. No such engine.")
             return false
         }
@@ -35,7 +35,7 @@ class Ship {
     }
 
     fun stopEngine(engineIdx: Int): Boolean {
-        if (engineIdx !in 0..engines.size) {
+        if (engineIdx !in engines.indices) {
             println("Error. No such engine.")
             return false
         }
@@ -53,7 +53,7 @@ class Ship {
     }
 }
 
-class Engine(val power: Int) {
+data class Engine(val power: Int) {
     var isRunning = false
         private set
 
@@ -82,6 +82,10 @@ abstract class Room(val capacity: Int) {
 
     fun leave(person: Person) {
         visitor.remove(person)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return capacity == (other as Room).capacity
     }
 }
 

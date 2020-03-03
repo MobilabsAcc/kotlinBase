@@ -31,6 +31,9 @@ class Bakery {
     }
 
     fun getAveragePrice(): Double {
+        if (orders.size == 0) {
+            return 0.0
+        }
         return orders.sumByDouble {it.getPriceWithToppings()} / orders.size
     }
 }
@@ -49,7 +52,7 @@ class Donut(private val donutSize: DonutSize, private val topping: Topping?) {
 }
 
 enum class DonutSize(val price: Double) {
-    STANDART(2.0),
+    STANDARD(2.0),
     EXTRA_LARGE(3.5);
 }
 
@@ -67,8 +70,8 @@ fun main() {
     val bakery = Bakery()
 
     println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.NUTELLA)))
-    println(bakery.make(Order(DonutSize.STANDART, Topping.BLUEBERRY)))
-    println(bakery.make(Order(DonutSize.STANDART, Topping.STRAWBERRY)))
+    println(bakery.make(Order(DonutSize.STANDARD, Topping.BLUEBERRY)))
+    println(bakery.make(Order(DonutSize.STANDARD, Topping.STRAWBERRY)))
     println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.RASPBERRY)))
     println(bakery.make(Order(DonutSize.EXTRA_LARGE, Topping.CRANBERRY)))
 
