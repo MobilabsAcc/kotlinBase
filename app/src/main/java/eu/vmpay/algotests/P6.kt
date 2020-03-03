@@ -63,21 +63,24 @@ class Tourist(age: Int) : Person(age) {
         if (age >= 18 && bar.currentNumberOfPeople < bar.capacity) {
             currentPlace = bar
             bar.currentNumberOfPeople++
-        }
+        } else
+            println("cannot enter $bar")
     }
 
     fun goToRestaurant(restaurant: Restaurant) {
         if (restaurant.currentNumberOfPeople < restaurant.capacity) {
             currentPlace = restaurant
             restaurant.currentNumberOfPeople++
-        }
+        } else
+            println("cannot enter $restaurant")
     }
 
     fun goToCabin(cabin: Cabin) {
         if (cabin.currentNumberOfPeople < cabin.capacity) {
             currentPlace = cabin
             cabin.currentNumberOfPeople++
-        }
+        } else
+            println("cannot enter $cabin")
     }
 }
 
@@ -89,14 +92,14 @@ class Captain(age: Int) : Person(age) {
     fun turnOnEngine(engine: Engine, ship: Ship) {
         if (!engine.isTurnedOn) {
             engine.isTurnedOn = true
-            ship.currentPower = engine.turnOn()
+            ship.currentPower += engine.turnOn()
         }
     }
 
     fun turnOffEngine(engine: Engine, ship: Ship) {
         if (engine.isTurnedOn) {
             engine.isTurnedOn = false
-            ship.currentPower = engine.turnOff()
+            ship.currentPower += engine.turnOff()
         }
     }
 }
