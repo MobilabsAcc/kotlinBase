@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import java.lang.Math.*
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -8,14 +10,24 @@ object P5 {
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
     fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
-        TODO("not implemented")
+
+        return( max(yourLeft, yourRight) == max(friendsLeft, friendsRight) )
+                &&
+              ( min(yourLeft, yourRight) == min(friendsLeft, friendsRight) )
     }
 
     /**
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+
+        var max: Int = 0
+
+        for (i: Int in 1 until inputArray.size){
+            if (abs(inputArray[i] - inputArray[i - 1]) > max)   max = abs(inputArray[i] - inputArray[i - 1])
+        }
+
+        return max
     }
 
     /**
@@ -25,7 +37,17 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+       var regex = Regex("([0-9]{1,3}\\.){3}[0-9]{1,3}")
+
+        if (!regex.matches(inputString)) return false
+
+        var list = inputString.split(".")
+
+        for (i in list){
+            if (i.toInt() < 0 || i.toInt() > 254) return false
+        }
+
+        return true
     }
 
     /**
@@ -34,8 +56,35 @@ object P5 {
      * to make jumps of the same length represented by some integer. Find the minimal length of the jump
      * enough to avoid all the obstacles.
      */
+
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+
+        var list = ArrayList<Int>()
+        list.addAll(inputArray)
+
+        list.sort()
+
+
+        var tmpList = ArrayList<Int>()
+
+        for (i: Int in 0..list.max()!! + 1)
+            if(!list.contains(i))   tmpList.add(i)
+
+
+        while (hasMod(list, arrayMaximalAdjacentDifference(tmpList)) && tmpList.size > 0){
+
+            tmpList.remove(arrayMaximalAdjacentDifference(tmpList))
+        }
+        return arrayMaximalAdjacentDifference(tmpList)
+
+    }
+
+    private fun hasMod(list: MutableList<Int>, element: Int) : Boolean{
+
+        for (i in list){
+            if (i % element == 0 && i != 0)   return true
+        }
+        return false
     }
 
     /**
@@ -48,7 +97,7 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        TODO()
     }
 
     /**
@@ -66,6 +115,80 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+
+        var tmpList = addBorder(matrix)
+
+        var resultList = ArrayList<ArrayList<Int>>()
+
+
+
+        for (i: Int in 0 until matrix.size){
+
+            var tmp = ArrayList<Int>()
+            resultList.add(tmp)
+
+            for (j: Int in 0 until matrix[i].size){
+                resultList[i].add(neighbour(tmpList, i, j))
+            }
+        }
+
+
+        return resultList as MutableList<MutableList<Int>>
+
+    }
+
+    fun neighbour(list: MutableList<MutableList<Boolean>>, a: Int, b: Int): Int{
+        var bombs = 0
+        var i = a + 1
+        var j = b + 1
+
+
+        if (list[i - 1][j]) bombs++
+        if (list[i + 1][j]) bombs++
+        if (list[i][j - 1]) bombs++
+        if (list[i][j + 1]) bombs++
+        if (list[i + 1][j - 1]) bombs++
+        if (list[i + 1][j + 1]) bombs++
+        if (list[i - 1][j + 1]) bombs++
+        if (list[i - 1][j - 1]) bombs++
+
+
+        return bombs
+    }
+
+    fun addBorder (matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Boolean>> {
+
+        var resultList = ArrayList<ArrayList<Boolean>>()
+
+
+        resultList.add(ArrayList<Boolean>())
+
+        for (i: Int in 0 until matrix[0].size+2)
+            resultList[0].add(false)
+
+
+        for (i: Int in 0 until matrix.size){
+
+            resultList.add(ArrayList<Boolean>())
+
+            for (j: Int in -1 until matrix[i].size + 1) {
+
+                if (j == -1 || j == matrix[i].size )    {
+                    resultList[i + 1].add(false)
+                }
+                else{
+                    resultList[i + 1].add(matrix[i][j])
+                }
+
+            }
+        }
+
+        resultList.add(ArrayList<Boolean>())
+
+        for (i: Int in 0 until matrix[0].size+2)
+            resultList[matrix.size + 1].add(false)
+
+
+        return resultList as MutableList<MutableList<Boolean>>
     }
 }
