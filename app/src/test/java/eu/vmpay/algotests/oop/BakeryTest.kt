@@ -1,11 +1,11 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.oop
 
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import org.junit.Before
 import org.junit.Test
 
-class P5Test {
+class BakeryTest {
 
     private lateinit var bakery: IBakery
 
