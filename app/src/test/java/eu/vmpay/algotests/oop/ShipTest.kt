@@ -1,10 +1,10 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.oop
 
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class P6Test {
+class ShipTest {
 
     private lateinit var ship: Ship
 
