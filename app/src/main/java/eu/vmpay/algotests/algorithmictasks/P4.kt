@@ -1,4 +1,4 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.algorithmictasks
 
 object P4 {
     /**

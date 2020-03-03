@@ -1,6 +1,4 @@
-package eu.vmpay.algotests
-
-import kotlin.math.pow
+package eu.vmpay.algotests.algorithmictasks
 
 object P2 {
 

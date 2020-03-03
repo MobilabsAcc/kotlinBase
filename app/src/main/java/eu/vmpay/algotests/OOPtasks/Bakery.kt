@@ -1,4 +1,4 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.OOPtasks
 
 /**
  * Challenge 1 - The bakery
@@ -32,9 +32,9 @@ enum class OrderType(val price: Double) {
 }
 
 data class Order(
-        val donut: Donut,
-        val topping: Topping,
-        val orderType: OrderType
+    val donut: Donut,
+    val topping: Topping,
+    val orderType: OrderType
 ) {
     fun getPrice() = donut.price + topping.price + orderType.price
 }

@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.OOPtasks.Bakery
+import eu.vmpay.algotests.OOPtasks.IBakery
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test
@@ -22,7 +24,8 @@ class BakeryTest {
 
     @Test
     fun getAverageOrderPriceFail() {
-        val bakery: IBakery = Bakery()
+        val bakery: IBakery =
+            Bakery()
         val actual = bakery.getAverageOrderPrice()
         assertEquals(0.0, actual)
     }

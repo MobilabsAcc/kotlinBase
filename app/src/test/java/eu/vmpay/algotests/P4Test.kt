@@ -1,8 +1,7 @@
 package eu.vmpay.algotests
 
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
+import eu.vmpay.algotests.algorithmictasks.P4
+import junit.framework.TestCase.*
 import org.junit.Test
 
 class P4Test {

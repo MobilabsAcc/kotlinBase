@@ -1,4 +1,4 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.OOPtasks
 
 /**
  * Challenge 2 - The cruise ship
@@ -18,7 +18,12 @@ class Ship() {
     val crewMembers = arrayOfNulls<Crew>(50)
     val captain = Captain("", "", 40, true)
     val tourist = arrayOfNulls<Tourist>(350)
-    val places = listOf<Place>(Place.BAR, Place.BIGGERROOM, Place.RESTAURANT, Place.SMALLERROOM)
+    val places = listOf<Place>(
+        Place.BAR,
+        Place.BIGGERROOM,
+        Place.RESTAURANT,
+        Place.SMALLERROOM
+    )
 }
 
 enum class Engine(val power: Int) {
