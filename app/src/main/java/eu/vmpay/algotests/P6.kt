@@ -1,5 +1,5 @@
 package eu.vmpay.algotests
-//object P6 {
+
     /**
      * Challenge 2 - The cruise ship
      *
@@ -15,7 +15,7 @@ package eu.vmpay.algotests
      */
 
     class Engine(val power: Double, var isWorking: Boolean = false) {
-        fun changeWorkingMode() {
+        fun changeWorkingMode()  {
             isWorking = isWorking.not()
         }
     }
@@ -33,6 +33,7 @@ package eu.vmpay.algotests
         fun addFriend(tourist: Tourist): Boolean {
             if (friends.contains(tourist))
                 return false
+            friends.add(tourist)
             return true
         }
     }
@@ -112,4 +113,3 @@ package eu.vmpay.algotests
             return true
         }
     }
-//}
