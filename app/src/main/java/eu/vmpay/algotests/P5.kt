@@ -1,5 +1,24 @@
 package eu.vmpay.algotests
 
+import kotlin.math.abs
+
+fun main() {
+    val x = P5.minesweeper(
+        mutableListOf(
+            mutableListOf(true, true, true),
+            mutableListOf(true, true, true),
+            mutableListOf(true, true, true)
+        )
+    )
+    for (i in 0..x.lastIndex) {
+        for (j in 0..x[i].lastIndex) {
+            print(x)
+            print(" ")
+        }
+        println(" ")
+    }
+}
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -7,16 +26,27 @@ object P5 {
      * can be both the right and the left), and so are their weakest arms. Given your and your
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
-    fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
-        TODO("not implemented")
-    }
+    fun areEquallyStrong(
+        yourLeft: Int,
+        yourRight: Int,
+        friendsLeft: Int,
+        friendsRight: Int
+    ): Boolean =
+        yourLeft.coerceAtLeast(yourRight) == friendsLeft.coerceAtLeast(friendsRight)
+
 
     /**
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var difference = 0
+        for (i in 0 until inputArray.lastIndex) {
+            if (abs(inputArray[i] - inputArray[i + 1]) > difference)
+                difference = abs(inputArray[i] - inputArray[i + 1])
+        }
+        return difference
     }
+
 
     /**
      * An IP address is a numerical label assigned to each device (e.g., computer, printer)
@@ -25,8 +55,27 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+        if (inputString.length < 7 || inputString.filter { it == '.' }.length != 3)
+            return false
+        val address = inputString.plus(".")
+        var start = -1
+        for (i in 0 until address.lastIndex) {
+            if (address[i] == '.') {
+                if (!isNumber(address.substring(start + 1, i)))
+                    return false
+                start = i
+            }
+        }
+        return true
     }
+
+    private fun isNumber(str: String): Boolean {
+        if (str.matches("[0-9]+".toRegex()))
+            if (str.toInt() == str.toInt().coerceIn(0, 255))
+                return true
+        return false
+    }
+
 
     /**
      * You are given an array of integers representing coordinates of obstacles situated on a straight line.
@@ -35,7 +84,19 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        if (inputArray.isEmpty())
+            return 1
+        val goodCoordinates = mutableListOf<Int>()
+        for (i in 1..inputArray.last() + inputArray.size) {
+            if (!inputArray.contains(i))
+                goodCoordinates.add(i)
+        }
+        for (i in 2..inputArray.last()) {
+            if (goodCoordinates.count { it % i == 0 } == goodCoordinates.last() / i) {
+                return i
+            }
+        }
+        return inputArray.size + 1
     }
 
     /**
@@ -66,6 +127,29 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        val output = mutableListOf<MutableList<Int>>()
+        for (i in 0..matrix.lastIndex) {
+            output.add(mutableListOf())
+            for (j in 0..matrix[i].lastIndex) {
+                output[i].add(countMinedNeighbours(i, j, matrix))
+            }
+        }
+        return output
     }
+
+    private fun countMinedNeighbours(
+        x: Int,
+        y: Int,
+        matrix: MutableList<MutableList<Boolean>>
+    ): Int {
+        var counter = 0
+        for (i in (x - 1).coerceAtLeast(0)..(x + 1).coerceAtMost(matrix.lastIndex))
+            for (j in (y - 1).coerceAtLeast(0)..(y + 1).coerceAtMost(matrix[i].lastIndex)) {
+                if ((i != x || y != j) && matrix[i][j])
+                    counter += 1
+            }
+        return counter
+    }
+
+
 }
