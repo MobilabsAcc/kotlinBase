@@ -23,7 +23,7 @@ class Ship() {
     val engines = listOf(Engine.smallerEngine, Engine.biggerEngine)
     val Crew = arrayOfNulls<shipCrewPerson>(50)
     val tourists = arrayOfNulls<Person>(350)
-    val places = listOf(Place.Bar, Place.Bar, listOf<Place.smallerCabin>(), listOf < Place.biggerCabin())
+    val places = listOf(Place.Bar, Place.Bar, listOf<Place>())
 }
 
 enum class Engine(val power: Int) {
@@ -53,7 +53,7 @@ class Captain(name: String, surname: String, val ship: Ship) : Person(name, surn
     }
 }
 
-class Tourist(val name: String, val surname: String, val age: Int, val currentPlace: Place = null) : Person(name, surname) {
+class Tourist(name: String,surname: String, val age: Int, val currentPlace: Place? = null) : Person(name, surname) {
     val friends = mutableListOf<Person>()
 
     fun addFriend(tourist: Tourist) {
@@ -81,7 +81,7 @@ class Tourist(val name: String, val surname: String, val age: Int, val currentPl
     }
 
     fun leavePlace(place: Place) {
-        capacity++
+        place.capacity++
     }
 
 }
