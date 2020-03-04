@@ -286,4 +286,3 @@ fun main() {
 
     ship.engine1.startEngine()
     ship.engine2.startEngine()
-}
