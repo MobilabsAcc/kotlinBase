@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.oop.Bar
+import eu.vmpay.algotests.oop.Tourist
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test

@@ -1,5 +1,8 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.oop.Cabin
+import eu.vmpay.algotests.oop.CabinCapacity
+import eu.vmpay.algotests.oop.Tourist
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -8,7 +11,8 @@ class TouristTest {
     @Test
     fun setMyCabin() {
         val tourist = Tourist("test", 18)
-        val cabin = Cabin(CabinCapacity.FOUR)
+        val cabin =
+            Cabin(CabinCapacity.FOUR)
         tourist.myCabin = cabin
         assertEquals(tourist.myCabin, cabin)
         assertTrue(cabin.residents.contains(tourist))

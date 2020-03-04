@@ -1,5 +1,6 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.oop.*
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -8,15 +9,26 @@ class ShipTest {
     @Test
     fun getEngines() {
         val ship = Ship()
-        assertEquals(ship.engines, listOf(Engine(2), Engine(4)))
+        assertEquals(ship.engines, listOf(
+            Engine(2),
+            Engine(4)
+        ))
     }
 
     @Test
     fun getRooms() {
         val ship = Ship()
-        assertEquals(ship.rooms, mutableListOf(Restaurant(), Bar(), Bar(),
-            Cabin(CabinCapacity.FOUR), Cabin(CabinCapacity.FOUR), Cabin(CabinCapacity.TWO),
-            Cabin(CabinCapacity.TWO), Cabin(CabinCapacity.TWO), Cabin(CabinCapacity.TWO))
+        assertEquals(ship.rooms, mutableListOf(
+            Restaurant(),
+            Bar(),
+            Bar(),
+            Cabin(CabinCapacity.FOUR),
+            Cabin(CabinCapacity.FOUR),
+            Cabin(CabinCapacity.TWO),
+            Cabin(CabinCapacity.TWO),
+            Cabin(CabinCapacity.TWO),
+            Cabin(CabinCapacity.TWO)
+        )
         )
     }
 
