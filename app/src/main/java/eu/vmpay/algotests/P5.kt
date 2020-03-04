@@ -75,6 +75,11 @@ data class Order(val donut: Donut, val list: List<Topping>){
 
 }
 
+enum class Type(var price: Double){
+    STANDARD(2.0),
+    EXTRA_LARGE(4.0)
+}
+
 class Donut(){
 
     var price = 0.0
