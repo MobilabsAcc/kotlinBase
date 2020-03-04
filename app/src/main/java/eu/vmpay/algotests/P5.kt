@@ -3,11 +3,11 @@ package eu.vmpay.algotests
 import kotlin.math.abs
 
 fun main() {
-    val x = P5.minesweeper(
+    val x = P5.boxBlur(
         mutableListOf(
-            mutableListOf(true, true, true),
-            mutableListOf(true, true, true),
-            mutableListOf(true, true, true)
+            mutableListOf(1, 2, 3),
+            mutableListOf(1, 2, 3),
+            mutableListOf(1, 2, 3)
         )
     )
     for (i in 0..x.lastIndex) {
@@ -109,7 +109,27 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        val blurredBox = mutableListOf<MutableList<Int>>()
+        for(i in 1 until image.lastIndex){
+            blurredBox.add(mutableListOf())
+            for(j in 1 until image[i].lastIndex){
+                blurredBox[i-1].add(countAverage(i,j,image))
+            }
+        }
+        return blurredBox
+    }
+
+    private fun countAverage(
+        x: Int,
+        y: Int,
+        matrix: MutableList<MutableList<Int>>
+    ): Int {
+        var sum = 0
+        for (i in x-1..x + 1)
+            for (j in y-1..y+1) {
+                    sum += matrix[i][j]
+            }
+        return sum/9
     }
 
     /**
