@@ -12,7 +12,7 @@ interface WeatherForecast {
 
     fun getPressure(): Double
 
-    fun getWeatherType(): String
+    fun getWeatherType(): WeatherType
 }
 
 interface WeatherService {
