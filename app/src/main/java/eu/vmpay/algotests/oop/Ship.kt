@@ -271,7 +271,7 @@ fun main() {
 
     val four = Cabin(4)
 
-    val ship = Ship("Black Pearl","World's end")
+    val ship = Ship("Black Pearl", "World's end")
     ship.addCrew(three)
     ship.addPassenger(one)
     ship.addPassenger(two)
@@ -286,3 +286,4 @@ fun main() {
 
     ship.engine1.startEngine()
     ship.engine2.startEngine()
+}
