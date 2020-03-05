@@ -1,5 +1,11 @@
 package eu.vmpay.algotests
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.lang.Integer.min
+import kotlin.math.abs
+import kotlin.math.max
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -7,15 +13,31 @@ object P5 {
      * can be both the right and the left), and so are their weakest arms. Given your and your
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
+    @RequiresApi(Build.VERSION_CODES.N)
     fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
-        TODO("not implemented")
+        var wynik=false
+        if(max(yourLeft,yourRight)==max(friendsLeft,friendsRight)&& min(yourLeft,yourRight)==min(friendsLeft,friendsRight)){
+            wynik=true
+        }
+        return wynik
     }
 
     /**
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var max=0
+        if(inputArray.indices.last==0){
+            max=inputArray[0]
+        }
+        else{
+            for(i in 0 until inputArray.indices.last){
+                if (abs(inputArray[i]-inputArray[i+1])>=max){
+                    max=abs(inputArray[i]-inputArray[i+1])
+                }
+            }
+        }
+        return max
     }
 
     /**
@@ -35,7 +57,25 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var udalosie=false
+        var prawda=0
+        var length=1
+        while(udalosie!=true){
+            for(i in 0..inputArray.indices.last){
+                if(inputArray[i]% length!=0){
+                    prawda++
+                }
+            }
+            if (prawda==inputArray.indices.last+1){
+                udalosie=true
+            }
+            else{
+                length++
+                prawda=0
+            }
+        }
+        println(length)
+        return length
     }
 
     /**
@@ -48,7 +88,27 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        println(image.indices.last-1)
+        println(image[0].indices.last-1)
+        for (j in 1..image.indices.last-1){
+            for (i in 1..image[0].indices.last-1){
+                image[j][i]=(image[j+1][i+1]+image[j+1][i]+image[j+1][i-1]+image[j][i+1]+image[j][i]+image[j][i-1]+image[j-1][i+1]+image[j-1][i]+image[j-1][i-1])/9
+            }
+        }
+        println(image)
+        for (j in 0..image.indices.last) {
+            image[j].removeAt(0)
+            image[j].removeAt(image[j].indices.last)
+        }
+
+        for (j in 0..image[0].indices.last) {
+            image[0].removeAt(j)
+        }
+        for (j in 0..image[image.indices.last].indices.last) {
+            image[image.indices.last].removeAt(j)
+        }
+        println(image)
+        return image
     }
 
     /**
