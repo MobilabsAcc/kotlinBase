@@ -1,6 +1,6 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.oop
 
-import eu.vmpay.algotests.Cabin as Cabin
+import eu.vmpay.algotests.oop.Cabin as Cabin
 
 /**
  * Challenge 2 - The cruise ship
@@ -20,7 +20,12 @@ fun main() {
     val captain = Captain(60)
     val touristA = Tourist(14)
     val touristB = Tourist(20)
-    val people = mutableListOf<Person>(Crew(42), Crew(25),Crew(65),Crew(54),Crew(32), touristA, touristB)
+    val people = mutableListOf<Person>(
+        Crew(42),
+        Crew(25),
+        Crew(65),
+        Crew(54),
+        Crew(32), touristA, touristB)
     val engineA = Engine(2000)
     val engineB = Engine(4000)
     val restaurant = Restaurant("restaurant")
@@ -29,7 +34,14 @@ fun main() {
     val cabinA = TwoPersonCabin("CabinA")
     val cabinB = FourPersonCabin("CabinB")
     val cabins = mutableListOf<Cabin>()
-    val ship = Ship(people, listOf(engineA, engineB), restaurant, barA, barB, cabins)
+    val ship = Ship(
+        people,
+        listOf(engineA, engineB),
+        restaurant,
+        barA,
+        barB,
+        cabins
+    )
 
     captain.turnOnEngine(engineA, ship)
     println(ship.currentPower)

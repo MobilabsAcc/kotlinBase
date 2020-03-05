@@ -1,5 +1,6 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.oop.*
 import org.junit.Test
 
 import org.junit.Assert.*

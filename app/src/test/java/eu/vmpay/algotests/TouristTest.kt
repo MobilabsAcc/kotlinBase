@@ -1,5 +1,9 @@
 package eu.vmpay.algotests
 
+import eu.vmpay.algotests.oop.Bar
+import eu.vmpay.algotests.oop.Restaurant
+import eu.vmpay.algotests.oop.Tourist
+import eu.vmpay.algotests.oop.TwoPersonCabin
 import org.junit.Test
 
 import org.junit.Assert.*
