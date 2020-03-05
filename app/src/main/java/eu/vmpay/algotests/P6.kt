@@ -6,7 +6,12 @@ object P6 {
      * Given an array of integers, replace all the occurrences of elemToReplace with substitutionElem.
      */
     fun arrayReplace(inputArray: MutableList<Int>, elemToReplace: Int, substitutionElem: Int): MutableList<Int> {
-        TODO("not implemented")
+        for(i in 0..inputArray.indices.last){
+            if (inputArray[i]==elemToReplace){
+                inputArray[i]=substitutionElem
+            }
+        }
+        return inputArray
     }
 
     /**
