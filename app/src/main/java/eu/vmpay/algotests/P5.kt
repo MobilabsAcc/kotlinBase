@@ -1,5 +1,9 @@
 package eu.vmpay.algotests
 
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -8,14 +12,18 @@ object P5 {
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
     fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
-        TODO("not implemented")
+        return max(yourLeft, yourRight) == max(friendsLeft, friendsRight) &&
+                min(yourLeft, yourRight) == min(friendsLeft, friendsRight)
     }
 
     /**
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        if (inputArray.isEmpty() || inputArray.size == 1) {
+            return 0
+        }
+        return inputArray.zipWithNext().map { (a, b) -> abs(a - b)}.max()!!
     }
 
     /**
@@ -25,7 +33,26 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+        fun String.isNumber(): Boolean {
+            return try {
+                this.toInt()
+                true
+            } catch(e: NumberFormatException) {
+                false
+            }
+        }
+        val chunks = inputString.split(".")
+        if (chunks.size != 4) {
+            return false
+        }
+        val result = chunks.map {
+            if (it.length in 1..3 && it.isNumber()) {
+                1
+            } else {
+                0
+            }
+        }.sum()
+        return result == 4
     }
 
     /**
@@ -35,7 +62,15 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        outerLoop@ for (i in 2 until inputArray.max()!!) {
+            for (item in inputArray) {
+                if (item % i == 0) {
+                    continue@outerLoop
+                }
+            }
+            return i
+        }
+        return inputArray.max()!! + 1
     }
 
     /**
@@ -48,7 +83,27 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        fun blurPixel(square: MutableList<MutableList<Int>>): Int {
+            return square.flatten().sum() / 9
+        }
+
+        val blurImage = mutableListOf<MutableList<Int>>()
+        for (rowPointer in 0..image.size - 3) {
+            val blurRow = mutableListOf<Int>()
+            for (columnPointer in 0..image[0].size - 3) {
+                val square = mutableListOf<MutableList<Int>>()
+                for (i in rowPointer..(rowPointer + 2)) {
+                    val squareRow = mutableListOf<Int>()
+                    for (j in columnPointer..(columnPointer + 2)) {
+                        squareRow.add(image[i][j])
+                    }
+                    square.add(squareRow)
+                }
+                blurRow.add(blurPixel(square))
+            }
+            blurImage.add(blurRow)
+        }
+        return blurImage
     }
 
     /**
@@ -66,6 +121,46 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        fun Boolean.toInt(): Int {
+            return if (this) {
+                1
+            } else {
+                0
+            }
+        }
+        val resultMatrix = mutableListOf<MutableList<Int>>()
+        for ((i, row) in matrix.withIndex()) {
+            val resultRow = mutableListOf<Int>()
+            for((j, value) in row.withIndex()) {
+                var sum = 0
+                if (i != 0) {
+                    sum += matrix[i - 1][j].toInt()
+                    if (j != 0) {
+                        sum += matrix[i - 1][j - 1].toInt()
+                    }
+                    if (j != row.size - 1) {
+                        sum += matrix[i - 1][j + 1].toInt()
+                    }
+                }
+                if (i != matrix.size - 1) {
+                    sum += matrix[i + 1][j].toInt()
+                    if (j != 0) {
+                        sum += matrix[i + 1][j - 1].toInt()
+                    }
+                    if (j != row.size - 1) {
+                        sum += matrix[i + 1][j + 1].toInt()
+                    }
+                }
+                if (j != 0) {
+                    sum += matrix[i][j - 1].toInt()
+                }
+                if (j != row.size - 1) {
+                    sum += matrix[i][j + 1].toInt()
+                }
+                resultRow.add(sum)
+            }
+            resultMatrix.add(resultRow)
+        }
+        return resultMatrix
     }
 }
