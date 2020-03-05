@@ -8,7 +8,8 @@ object P3 {
      * allLongestStrings(inputArray) = ["aba", "vcd", "aba"].
      */
     fun allLongestStrings(inputArray: MutableList<String>): MutableList<String> {
-        TODO("not implemented")
+        val maxLength = inputArray.map { it.length }.max()
+        return inputArray.filter { it.length == maxLength }.toMutableList()
     }
 
     /**
@@ -17,7 +18,11 @@ object P3 {
      * Strings have 3 common characters - 2 "a"s and 1 "c".
      */
     fun commonCharacterCount(s1: String, s2: String): Int {
-        TODO("not implemented")
+        var tmp = s2
+        for (character in s1.asSequence())
+            if (tmp.contains(character))
+                tmp = tmp.replaceFirst(Character.toString(character), "", false)
+        return s2.length - tmp.length
     }
 
     /**
@@ -28,7 +33,12 @@ object P3 {
      * For n = 239017, the output should be isLucky(n) = false.
      */
     fun isLucky(n: Int): Boolean {
-        TODO("not implemented")
+        var list = n.toString().toCharArray().map { it.toString().toInt() }
+        var a = 0
+        var b = 0
+        for (i in list.indices)
+            if (i < list.size / 2) a += list[i] else b += list[i]
+        return a == b
     }
 
     /**
@@ -39,7 +49,8 @@ object P3 {
      * the output should be sortByHeight(a) = [-1, 150, 160, 170, -1, -1, 180, 190].
      */
     fun sortByHeight(a: MutableList<Int>): MutableList<Int> {
-        TODO("not implemented")
+        val s = a.filter { it != -1 }.sorted().toMutableList()
+        return a.map { if (it == -1) -1 else s.removeAt(0) }.toMutableList()
     }
 
     /**
@@ -55,6 +66,9 @@ object P3 {
      * Because "foo(bar(baz))blim" becomes "foo(barzab)blim" and then "foobazrabblim".
      */
     fun reverseInParentheses(inputString: String): String {
-        TODO("not implemented")
+        val closeIndex = inputString.indexOfFirst { it == ')' }
+        if (closeIndex == -1) return inputString
+        val openIndex = inputString.substring(0, closeIndex).indexOfLast { it == '(' }
+        return reverseInParentheses(inputString.substring(0, openIndex) + inputString.substring(openIndex + 1, closeIndex).reversed() + inputString.substring(closeIndex + 1))
     }
 }

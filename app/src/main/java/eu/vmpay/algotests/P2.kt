@@ -9,7 +9,14 @@ object P2 {
      * adjacentElementsProduct(inputArray) = 21. 7 and 3 produce the largest product.
      */
     fun adjacentElementsProduct(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var prod = inputArray[0] * inputArray[1]
+        for (i in 2 until inputArray.size) {
+            val tmp = inputArray[i] * inputArray[i - 1]
+            if (prod < tmp) {
+                prod = tmp
+            }
+        }
+        return prod
     }
 
     /**
@@ -19,15 +26,15 @@ object P2 {
      * to its rim, side by side. You can see the 1-, 2-, 3- and 4-interesting polygons in the picture below.
      * For n = 2, the output should be shapeArea(n) = 5;
      * For n = 3, the output should be shapeArea(n) = 13.
-     *                                 *
-     *                  *            * * *
-     *          *     * * *        * * * * *
-     *                  *            * * *
-     *                                 *
-     *          1       2              3
      */
     fun shapeArea(n: Int): Int {
-        TODO("not implemented")
+        var step = 1
+        var area = 1
+        while (step != n) {
+            area += 4 * step
+            step++
+        }
+        return area
     }
 
     /**
@@ -40,7 +47,15 @@ object P2 {
      * Ratiorg needs statues of sizes 4, 5 and 7.
      */
     fun makeArrayConsecutive2(statues: MutableList<Int>): Int {
-        TODO("not implemented")
+        var min = statues[0]
+        var max = statues[0]
+        for (i in 1 until statues.size) {
+            if (statues[i] > max)
+                max = statues[i]
+            if (statues[i] < min)
+                min = statues[i]
+        }
+        return max - min - statues.size + 1
     }
 
     /**
@@ -55,7 +70,29 @@ object P2 {
      * you can remove 2 to get the strictly increasing sequence [1, 3].
      */
     fun almostIncreasingSequence(sequence: MutableList<Int>): Boolean {
-        TODO("not implemented")
+        return if (check(sequence.toMutableList(), 0))
+            true
+        else
+            check(sequence.toMutableList(), 1)
+    }
+
+    private fun check(sequence: MutableList<Int>, j: Int): Boolean {
+        var lastTime = false
+        for (i in 1 until sequence.size) {
+            if (sequence[i] <= sequence[i - 1])
+                if (lastTime)
+                    return false
+                else {
+                    lastTime = true
+                    sequence.removeAt(i - j)
+                    break
+                }
+        }
+        for (i in 1 until sequence.size) {
+            if (sequence[i] <= sequence[i - 1])
+                return false
+        }
+        return true
     }
 
     /**
@@ -81,7 +118,17 @@ object P2 {
      * (not just the room directly beneath it). Thus, the answer is 1 + 1 + 1 + 5 + 1 = 9.
      */
     fun matrixElementsSum(matrix: MutableList<MutableList<Int>>): Int {
-        TODO("not implemented")
+        var sum = 0
+        var columns = mutableListOf<Int>()
+        for (i in 0 until matrix.size) {
+            for (j in 0 until matrix[0].size) {
+                if (!columns.contains(j))
+                    sum += matrix[i][j]
+                if (matrix[i][j] == 0)
+                    columns.add(j)
+            }
+        }
+        return sum
     }
 
 }
