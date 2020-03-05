@@ -86,5 +86,23 @@ class P5Test {
                 )
             )
         )
+        assertEquals(
+            mutableListOf(
+                mutableListOf(1, 2, 2, 2, 1),
+                mutableListOf(2, 1, 3, 3, 4),
+                mutableListOf(2, 2, 4, 3, 3),
+                mutableListOf(0, 2, 4, 5, 5),
+                mutableListOf(1, 2, 2, 3, 2)
+            ),
+            P5.minesweeper(
+                mutableListOf(
+                    mutableListOf(true, false, false, false, true),
+                    mutableListOf(false, true, false, true, false),
+                    mutableListOf(false, false, false, true, true),
+                    mutableListOf(true, false, false, true, false),
+                    mutableListOf(false, false, true, true, true)
+                )
+            )
+        )
     }
 }
