@@ -1,5 +1,8 @@
 package eu.vmpay.algotests
 
+import kotlin.math.max
+import kotlin.math.min
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -7,7 +10,18 @@ object P5 {
      * can be both the right and the left), and so are their weakest arms. Given your and your
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
-    fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
+    fun areEquallyStrong(
+        yourLeft: Int,
+        yourRight: Int,
+        friendsLeft: Int,
+        friendsRight: Int
+    ): Boolean {
+        if (max(yourLeft, yourRight) == max(friendsLeft, friendsRight) && min(
+                yourLeft,
+                yourRight
+            ) == min(friendsLeft, friendsRight)
+        ) return true
+        return false
         TODO("not implemented")
     }
 
@@ -15,6 +29,12 @@ object P5 {
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
+        var high = 0
+        for (item in 0 until inputArray.size) {
+            high =
+                if (Math.abs((inputArray[item] - inputArray[item + 1])) > high) Math.abs((inputArray[item] - inputArray[item + 1])) else high
+        }
+        return high
         TODO("not implemented")
     }
 
@@ -35,6 +55,13 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
+        var minLen = if (inputArray.size != 0) 2 else return 0
+        for (item in inputArray) {
+            while (item % minLen == 0) {
+                minLen++
+            }
+            return minLen
+        }
         TODO("not implemented")
     }
 
@@ -66,6 +93,40 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        val newList = mutableListOf<MutableList<Int>>()
+        for (i in 0 until matrix.size) {
+            newList.add(mutableListOf<Int>())
+            for (j in 0 until matrix[i].size) {
+                var tmp = 0
+                if (j - 1 >= 0) {
+                    if (i - 1 >= 0) {
+                        if (matrix[i - 1][j - 1]) tmp++
+                    }
+                    if (i + 1 < matrix.size) {
+                        if (matrix[i + 1][j - 1]) tmp++
+                    }
+                    if (matrix[i][j - 1]) tmp++
+                }
+                if (j + 1 < matrix[i].size) {
+                    if (i - 1 >= 0) {
+                        if (matrix[i - 1][j + 1]) tmp++
+                    }
+                    if (i + 1 < matrix.size) {
+                        if (matrix[i + 1][j + 1]) tmp++
+                    }
+                    if (matrix[i][j + 1]) tmp++
+                }
+                if (i - 1 >= 0) {
+                    if (matrix[i - 1][j]) tmp++
+                }
+                if (i + 1 < matrix.size) {
+                    if (matrix[i + 1][j])tmp++
+                }
+                newList[i].add(tmp)
+            }
+        }
+        return newList
     }
+
+
 }

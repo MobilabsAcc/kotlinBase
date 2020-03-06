@@ -133,16 +133,16 @@ class Cabin(var size: Int) {
 }
 
 
-class Bar(val number:Int){
+class Bar(val number: Int) {
     var presentList = mutableListOf<Tourist>()
 
 
-    fun enterBar(passenger: Tourist){
-        if(presentList.size >= 50){
+    fun enterBar(passenger: Tourist) {
+        if (presentList.size >= 50) {
             println("Sorry, but bar number $number is fully occupied")
             return
         }
-        if(passenger.age < 18){
+        if (passenger.age < 18) {
             println("Sorry, but you are underage mate")
             return
         }
@@ -150,8 +150,8 @@ class Bar(val number:Int){
         println("""${passenger.name} has entered the bar number $number""")
     }
 
-    fun leaveBar(passenger: Tourist){
-        if(presentList.size != 0){
+    fun leaveBar(passenger: Tourist) {
+        if (presentList.size != 0) {
             presentList.remove(passenger)
             println("""${passenger.name} has left the bar number $number""")
         }
@@ -159,21 +159,20 @@ class Bar(val number:Int){
 }
 
 
-class Restaurant(){
+class Restaurant() {
     var presentList = mutableListOf<Tourist>()
     var staffList = mutableListOf<Crew>()
 
-    fun addStaff(staff:Crew){
-        if(staff.getOccupation() == "Staff"){
+    fun addStaff(staff: Crew) {
+        if (staff.getOccupation() == "Staff") {
             staffList.add(staff)
-        }
-        else{
+        } else {
             println("Wrong occupation")
         }
     }
 
-    fun enterRestaurant(passenger: Tourist){
-        if(presentList.size >= 300){
+    fun enterRestaurant(passenger: Tourist) {
+        if (presentList.size >= 300) {
             println("Sorry, but restaurant is fully occupied")
             return
         }
@@ -182,8 +181,8 @@ class Restaurant(){
         println("""${passenger.name} has entered the restaurant""")
     }
 
-    fun leaveRestaurant(passenger: Tourist){
-        if(presentList.size != 0){
+    fun leaveRestaurant(passenger: Tourist) {
+        if (presentList.size != 0) {
             presentList.remove(passenger)
             println("""${passenger.name} has left the restaurant""")
         }
@@ -191,7 +190,7 @@ class Restaurant(){
 }
 
 
-class Ship(val name:String,val destination:String){
+class Ship(val name: String, val destination: String) {
 
     var passengerList = mutableListOf<Tourist>()
     var crewList = mutableListOf<Crew>()
@@ -206,54 +205,52 @@ class Ship(val name:String,val destination:String){
 
     val cabinList = mutableListOf<Cabin>()
 
-    fun addPassenger(passenger: Tourist){
-        if(passengerList.size < 300){
+    fun addPassenger(passenger: Tourist) {
+        if (passengerList.size < 300) {
             passengerList.add(passenger)
             println("""${passenger.name} ${passenger.surname} has been added""")
-        }
-        else{
+        } else {
             println("Ship's full")
         }
     }
 
-    fun removePassenger(passenger: Tourist){
-        if(passengerList.size != 0 ){
+    fun removePassenger(passenger: Tourist) {
+        if (passengerList.size != 0) {
             passengerList.remove(passenger)
             println("""${passenger.name} ${passenger.surname} has been removed""")
         }
     }
 
-    fun printPassengerList(){
-        for(item in passengerList){
-            println(item.name + " "+ item.surname)
+    fun printPassengerList() {
+        for (item in passengerList) {
+            println(item.name + " " + item.surname)
         }
     }
 
-    fun addCrew(crew:Crew){
-        if(crewList.size < 50){
+    fun addCrew(crew: Crew) {
+        if (crewList.size < 50) {
             crewList.add(crew)
             println("""${crew.name} ${crew.surname} has been added""")
-        }
-        else{
+        } else {
             println("Ship's full")
         }
     }
 
-    fun removeCrew(crew:Crew){
-        if(crewList.size != 0 ){
+    fun removeCrew(crew: Crew) {
+        if (crewList.size != 0) {
             crewList.remove(crew)
             println("""${crew.name} ${crew.surname} has been removed""")
         }
     }
 
-    fun printCrew(){
-        for (item in crewList){
+    fun printCrew() {
+        for (item in crewList) {
             println(item.getInfo())
         }
     }
 
 
-    fun addCabin(cabin:Cabin){
+    fun addCabin(cabin: Cabin) {
         cabinList.add(cabin)
         println("Cabin has been added")
     }
@@ -286,4 +283,8 @@ fun main() {
 
     ship.engine1.startEngine()
     ship.engine2.startEngine()
+
+
+
+
 }
