@@ -18,7 +18,15 @@ object P6 {
      * Check if all digits of the given integer are even.
      */
     fun evenDigitsOnly(n: Int): Boolean {
-        TODO("not implemented")
+        var wynik=true
+        val strNum :String = "" + n;
+        for( i in strNum) {
+            val digit = Integer.parseInt(i.toString())
+            if (digit % 2 == 1) {
+                wynik=false
+            }
+        }
+        return wynik
     }
 
     /**
@@ -26,21 +34,37 @@ object P6 {
      * start with a digit. Check if the given string is a correct variable name.
      */
     fun variableName(name: String): Boolean {
-        TODO("not implemented")
+        if (name[0].isDigit()) {
+            return false
+        }
+        val lista = name.filter { !it.isLetterOrDigit() && it != '_' }
+        return lista.none()
     }
-
     /**
      * Given a string, your task is to replace each of its characters by the next one in the English alphabet;
      * i.e. replace a with b, replace b with c, etc (z would be replaced by a).
      */
     fun alphabeticShift(inputString: String): String {
-        TODO("not implemented")
+        var s = inputString.split("").toMutableList();
+        println(s)
+        for( i in 0 .. s.indices.last){
+            when(s[i]){
+                "" -> ""
+                "z"-> s[i]="a"
+                else -> s[i]=s[i].map{it+1}.joinToString()
+
+            }
+        }
+        return s.joinToString("")
     }
 
     /**
      * Given two cells on the standard chess board, determine whether they have the same color or not.
      */
-    fun chessBoardCellColor(cell1: String, cell2: String) {
-        TODO("not implemented")
+    fun chessBoardCellColor(cell1: String, cell2: String):Boolean {
+        var wynik=false
+        if((cell1[0].toInt()+cell1[1].toInt())%2==(cell2[0].toInt()+cell2[1].toInt())%2)
+            wynik=true
+        return wynik
     }
 }

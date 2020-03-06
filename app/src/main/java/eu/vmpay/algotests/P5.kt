@@ -47,7 +47,45 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+        var wynik=true
+        fun String.isNumber(): Boolean {
+            return try {
+                this.toInt()
+                true
+            } catch(e: NumberFormatException) {
+                false
+            }
+        }
+
+        var split=inputString.split(".")
+        println(split.size)
+        if(split.size!=4) {
+            wynik=false
+        }
+        for( i in 0..3){
+            if(!split[i].isNumber()){
+                wynik=false
+            }
+        }
+        println(wynik)
+        var one=split[0].toCharArray()
+        if (one.indices.last!=2 || one[0].toString() =="0"){
+            wynik=false
+        }
+        var two=split[1].toCharArray()
+        if(two.indices.last!=1){
+            wynik=false
+        }
+
+        var three=split[2].toCharArray()
+        if(three.indices.last!=2){
+            wynik=false
+        }
+        var four=split[3].toCharArray()
+        if(four.indices.last!=0){
+            wynik=false
+        }
+        return wynik
     }
 
     /**
@@ -88,32 +126,23 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        println(image.indices.last-1)
-        println(image[0].indices.last-1)
         for (j in 1..image.indices.last-1){
             for (i in 1..image[0].indices.last-1){
                 image[j][i]=(image[j+1][i+1]+image[j+1][i]+image[j+1][i-1]+image[j][i+1]+image[j][i]+image[j][i-1]+image[j-1][i+1]+image[j-1][i]+image[j-1][i-1])/9
             }
         }
-        println(image)
         for (j in 0..image.indices.last) {
             image[j].removeAt(0)
             image[j].removeAt(image[j].indices.last)
         }
-
-        for (j in 0..image[0].indices.last) {
-            image[0].removeAt(j)
-        }
-        for (j in 0..image[image.indices.last].indices.last) {
-            image[image.indices.last].removeAt(j)
-        }
-        println(image)
+        image.removeAt(0)
+        image.removeAt(image.indices.last)
         return image
     }
 
     /**
      * In the popular Minesweeper game you have a board with some mines and those cells that don't
-     * ontain a mine have a number in it that indicates the total number of mines in the neighboring cells.
+     * contain a mine have a number in it that indicates the total number of mines in the neighboring cells.
      * Starting off with some arrangement of mines we want to create a Minesweeper game setup.
      * Example
      * For
@@ -126,6 +155,124 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        var wynik: MutableList<MutableList<Int>> = mutableListOf()
+        matrix.forEach { it -> wynik.add(it.toIntList()) }
+        //tworzymy wszystkie srodkowe wyrazy
+        for (j in 1..matrix.indices.last-1){
+            for(i in 1..matrix[0].indices.last-1){
+                for(k in j-1 ..j+1){
+                    for(l in i-1..i+1){
+                        if(matrix[k][l]){
+                            wynik[j][i]++
+                        }
+                    }
+                }
+                if(matrix[j][i]){
+                    wynik[j][i]--
+                }
+            }
+        }
+        //tworzymy pierwszy rząd bez rogów
+        for(i in 1..matrix[0].indices.last-1){
+            for (k in 0..1) {
+                for (l in i - 1..i + 1) {
+                    if(matrix[k][l]==true){
+                        wynik[0][i]++
+                    }
+                }
+            }
+            if (matrix[0][i]==true){
+                wynik[0][i]--
+            }
+        }
+        //torzymy lewy róg
+        for(k in 0..1){
+            for(l in 0..1){
+                if(matrix[k][l]==true){
+                    wynik[0][0]++
+                }
+            }
+        }
+        if(matrix[0][0]==true){
+            wynik[0][0]--
+        }
+        //tworzymy prawy róg
+        for(k in 0..1){
+            for(l in matrix[0].indices.last-1..matrix[0].indices.last){
+                if(matrix[k][l]==true){
+                    wynik[0][matrix[0].indices.last]++
+                }
+            }
+        }
+        if(matrix[0][matrix[0].indices.last]==true){
+            wynik[0][matrix[0].indices.last]--
+        }
+        //tworzymy dolny rząd bez rogów
+        for(i in 1..matrix[matrix.indices.last].indices.last-1){
+            for (k in matrix.indices.last-1..matrix.indices.last) {
+                for (l in i - 1..i + 1) {
+                    if(matrix[k][l]==true){
+                        wynik[matrix.indices.last][i]++
+                    }
+                }
+            }
+            if (matrix[matrix.indices.last][i]==true){
+                wynik[matrix.indices.last][i]--
+            }
+        }
+        //tworzymy dolny lewy róg
+        for(k in matrix.indices.last-1..matrix.indices.last){
+            for(l in 0..1){
+                if(matrix[k][l]==true){
+                    wynik[matrix.indices.last][0]++
+                }
+            }
+        }
+        if(matrix[matrix.indices.last][0]==true){
+            wynik[matrix.indices.last][0]--
+        }
+        //tworzymy prawy dolny róg
+        for(k in matrix.indices.last-1..matrix.indices.last){
+            for(l in matrix[matrix.indices.last].indices.last-1..matrix[matrix.indices.last].indices.last){
+                if(matrix[k][l]==true){
+                    wynik[matrix.indices.last][matrix[matrix.indices.last].indices.last]++
+                }
+            }
+        }
+        if(matrix[matrix.indices.last][matrix[matrix.indices.last].indices.last]==true){
+            wynik[matrix.indices.last][matrix[matrix.indices.last].indices.last]--
+        }
+        println(wynik)
+        //tworzymy lewy bok
+        for( i in 1 .. matrix.indices.last-1){
+            for(k in i-1..i+1){
+                for(l in 0..1){
+                    if(matrix[k][l]==true){
+                        wynik[i][0]++
+                    }
+                }
+            }
+            if (matrix[i][0]==true)
+                wynik[i][0]--
+        }
+        //prawy bok
+        for( i in 1 .. matrix.indices.last-1){
+            for(k in i-1..i+1){
+                for(l in matrix[0].indices.last-1..matrix[0].indices.last){
+                    println(matrix[k][l])
+                    if(matrix[k][l]==true){
+                        wynik[i][matrix[0].indices.last]++
+                    }
+                }
+            }
+            if (matrix[i][matrix[0].indices.last]==true)
+                wynik[i][matrix[0].indices.last]--
+        }
+        return wynik
     }
+}
+fun MutableList<Boolean>.toIntList(): MutableList<Int> {
+    var result: MutableList<Int> = mutableListOf()
+    this.forEach { it -> result.add(0) }
+    return result
 }
