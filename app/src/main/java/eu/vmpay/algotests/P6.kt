@@ -1,15 +1,11 @@
 package eu.vmpay.algotests
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import java.util.function.UnaryOperator
-
 object P6 {
 
     /**
      * Given an array of integers, replace all the occurrences of elemToReplace with substitutionElem.
      */
-    @RequiresApi(Build.VERSION_CODES.N)
+
     fun arrayReplace(
         inputArray: MutableList<Int>,
         elemToReplace: Int,
@@ -28,7 +24,6 @@ object P6 {
             tmp /= 10
         }
         return true
-        TODO("not implemented")
     }
 
     /**
@@ -41,7 +36,7 @@ object P6 {
             if (!name[item].isLetterOrDigit() && name[item] != '_') return false
         }
         return true
-        TODO("not implemented")
+
     }
 
     /**
@@ -49,13 +44,17 @@ object P6 {
      * i.e. replace a with b, replace b with c, etc (z would be replaced by a).
      */
     fun alphabeticShift(inputString: String): String {
-        TODO("not implemented")
+        return String(inputString.map {
+            when (it) {
+                in 'A'..'Z' -> ((it - 'A' + 1) % 26 + 65).toChar()
+                in 'a'..'z' -> ((it - 'a' + 1) % 26 + 97).toChar()
+                else -> it
+            }
+        }.toCharArray())
     }
-
     /**
      * Given two cells on the standard chess board, determine whether they have the same color or not.
      */
-    fun chessBoardCellColor(cell1: String, cell2: String) {
-        TODO("not implemented")
-    }
+    fun chessBoardCellColor(cell1: String, cell2: String): Boolean
+        = ((cell1[0].toInt()%2 == cell1[1].toInt()%2) == (cell2[0].toInt()%2 == cell2[1].toInt()%2))
 }

@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import androidx.core.text.isDigitsOnly
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -22,7 +24,6 @@ object P5 {
             ) == min(friendsLeft, friendsRight)
         ) return true
         return false
-        TODO("not implemented")
     }
 
     /**
@@ -30,12 +31,11 @@ object P5 {
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
         var high = 0
-        for (item in 0 until inputArray.size) {
+        for (item in 0 until inputArray.size - 1) {
             high =
-                if (Math.abs((inputArray[item] - inputArray[item + 1])) > high) Math.abs((inputArray[item] - inputArray[item + 1])) else high
+                if (abs((inputArray[item] - inputArray[item + 1])) > high) abs((inputArray[item] - inputArray[item + 1])) else high
         }
         return high
-        TODO("not implemented")
     }
 
     /**
@@ -45,8 +45,11 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+        if (inputString.length < 7 || inputString.filter { it == '.' }.length != 3 || inputString.indexOf('.') == 0) return false
+        if(!inputString.filter { it != '.' }.isDigitsOnly()) return true
+        return true
     }
+
 
     /**
      * You are given an array of integers representing coordinates of obstacles situated on a straight line.
@@ -55,14 +58,18 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        var minLen = if (inputArray.size != 0) 2 else return 0
+        var minJump = 2
+        val forbiddenSet = mutableSetOf<Int>()
+        if (inputArray.size != 0) forbiddenSet.add(2) else return 1
         for (item in inputArray) {
-            while (item % minLen == 0) {
-                minLen++
+            for (i in 1..item) if (item % i == 0) forbiddenSet.add(i).also {
+                if (minJump == i) while (forbiddenSet.contains(
+                        minJump
+                    )
+                ) minJump++
             }
-            return minLen
         }
-        TODO("not implemented")
+        return minJump
     }
 
     /**
@@ -75,8 +82,16 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        val newImage = mutableListOf<MutableList<Int>>()
+        for (i in 0 until image.size - 1 step 3) {
+            newImage.add(mutableListOf<Int>())
+            for (j in 0 until image[0].size - 1 step 3) {
+                newImage[i / 3].add((image[i + 1][j + 1] + image[i + 1][j] + image[i + 1][j + 2] + image[i][j] + image[i][j + 1] + image[i][j + 2] + image[i + 2][j] + image[i + 2][j + 1] + image[i + 2][j + 2]) / 9)
+            }
+        }
+        return newImage
     }
+
 
     /**
      * In the popular Minesweeper game you have a board with some mines and those cells that don't
@@ -120,7 +135,7 @@ object P5 {
                     if (matrix[i - 1][j]) tmp++
                 }
                 if (i + 1 < matrix.size) {
-                    if (matrix[i + 1][j])tmp++
+                    if (matrix[i + 1][j]) tmp++
                 }
                 newList[i].add(tmp)
             }
@@ -128,5 +143,5 @@ object P5 {
         return newList
     }
 
-
 }
+
