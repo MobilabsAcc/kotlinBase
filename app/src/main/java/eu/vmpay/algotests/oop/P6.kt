@@ -1,90 +1,64 @@
-package eu.vmpay.algotests.oop
-
-import java.lang.Exception
-
-/**
- * Challenge 2 - The cruise ship
- *
- * Four hundred people were traveling on a cruise ship with two engines having power of: 2kHP, 4kHP.
- * Fifty people represented the ship crew while others were tourists. The ship could have both engines
- * operating simultaneously, only one at a time or keep both off depending on the captain command.
- * Every tourist was assigned to a two or four person cabin shared with our tourists, which could be
- * his friends. The ship had a restaurant and a two bars of 300, 50 ,50 people capacity correspondingly.
- * Each tourist could visit one of the attractions or stay and his cabin at a time. Tourists under
- * 18 years were not allowed to enter the bar.
- *
- * Goal: implement the ship, engine, person, restaurant, bar, cabin classes reflecting the above case.
- */
+package eu.vmpay.algotests
 
 
-class Ship() {
-    val engines = listOf(
-        Engine.smallerEngine,
-        Engine.biggerEngine
-    )
-    val Crew = arrayOfNulls<shipCrewPerson>(50)
-    val tourists = arrayOfNulls<Person>(350)
-    val places = listOf(
-        Place.Bar,
-        Place.Bar, listOf<Place>())
-}
+object P6 {
 
-enum class Engine(val power: Int) {
-    biggerEngine(2),
-    smallerEngine(4);
+    /**
+     * Given an array of integers, replace all the occurrences of elemToReplace with substitutionElem.
+     */
+    fun arrayReplace(
+        inputArray: MutableList<Int>,
+        elemToReplace: Int,
+        substitutionElem: Int
+    ): MutableList<Int> =
+        inputArray.map { if (it == elemToReplace) substitutionElem else it }.toMutableList()
 
-    var work: Boolean = false
-}
 
-enum class Place(var capacity: Int) {
-    smallerCabin(2),
-    biggerCabin(4),
-    Bar(50),
-    Restaurant(300);
-
-    val people = mutableListOf<Tourist>()
-
-}
-
-open class Person(val name: String, val surname: String) {}
-
-class shipCrewPerson(name: String, surname: String, val salary: Int) : Person(name, surname) {}
-
-class Captain(name: String, surname: String, val ship: Ship) : Person(name, surname) {
-    fun work(work: Boolean) {
-        ship.engines.map { it.work = work }
-    }
-}
-
-class Tourist(name: String,surname: String, val age: Int, val currentPlace: Place? = null) : Person(name, surname) {
-    val friends = mutableListOf<Person>()
-
-    fun addFriend(tourist: Tourist) {
-        friends.add(tourist)
+    /**
+     * Check if all digits of the given integer are even.
+     */
+    fun evenDigitsOnly(n: Int): Boolean {
+        var numb = n
+        while (numb >= 1) {
+            if ((numb % 10) % 2 != 0)
+                return false
+            numb /= 10
+        }
+        return true
     }
 
-    fun removeFriend(tourist: Tourist) {
-        friends.remove(tourist)
 
-    }
+    /**
+     * Correct variable names consist only of English letters, digits and underscores and they can't
+     * start with a digit. Check if the given string is a correct variable name.
+     */
+    fun variableName(name: String): Boolean =
+        name.count {
+            it !in 'a'..'z' && it !in 'A'..'Z' && it !in '0'..'9' && it != '_'
+        } == 0 &&  !name[0].isDigit()
 
-    fun move(from: Place, to: Place) {
-        if (currentPlace != null)
-            leavePlace(from)
-        enterPlace(to)
-    }
 
-    fun enterPlace(place: Place) {
-        if (place.capacity == 0)
-            throw Exception("this place is full, nobody can enter here")
 
-        if (place == Place.Bar && age < 18)
-            throw Exception("you can't entered here")
-        place.capacity--
-    }
+    /**
+     * Given a string, your task is to replace each of its characters by the next one in the English alphabet;
+     * i.e. replace a with b, replace b with c, etc (z would be replaced by a).
+     */
+    fun alphabeticShift(inputString: String): String =
+        String(inputString.map {
+            when (it) {
+                in 'A'..'Z' -> ((it - 'A' + 1) % 26 + 65).toChar()
+                in 'a'..'z' -> ((it - 'a' + 1) % 26 + 97).toChar()
+                else -> it
+            }
+        }.toCharArray())
 
-    fun leavePlace(place: Place) {
-        place.capacity++
-    }
 
+    /**
+     * Given two cells on the standard chess board, determine whether they have the same color or not.
+     */
+    fun chessBoardCellColor(cell1: String, cell2: String): Boolean =
+        isWhite(cell1[0].toInt(), cell1[1].toInt()) == isWhite(cell2[0].toInt(), cell2[1].toInt())
+
+    private fun isWhite(x: Int, y: Int): Boolean =
+        x % 2 == y % 2
 }
