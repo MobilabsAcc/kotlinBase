@@ -1,48 +1,83 @@
 package eu.vmpay.algotests
 
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class P6Test {
-    var ship:Ship = Ship()
-    init{
-        ship.boardTourist(Tourist("a", "b", 21, null, null))
-        ship.boardTourist(Tourist("b", "b", 18, null, null))
-        ship.boardTourist(Tourist("c", "b", 13, null, null))
-        ship.boardTourist(Tourist("d", "b", 12, null, null))
-        ship.boardCrew(Crew("e", "f", "Captain"))
-        ship.boardCrew(Crew("e", "f", "Chef"))
-        ship.cabins.add(Cabin(2, "1"))
-        ship.cabins.add(Cabin(4, "2"))
-        ship.bars.add(Bar("First bar"))
-        ship.bars.add(Bar("Second bar"))
-        ship.restaurants.add(Restaurant("Restaurant"))
-
-    }
     @Test
-    fun attractionTest() {
-        assertEquals(true, ship.bars[0].visit(ship.tourists[0]))
-        assertEquals(true, ship.bars[1].visit(ship.tourists[1]))
-        assertEquals(false, ship.bars[1].visit(ship.tourists[2]))
-        assertEquals(true, ship.restaurants[0].visit(ship.tourists[3]))
-    }
-
-    @Test
-    fun EngineTest() {
-        assertEquals(true, ship.changeEngineMode(ship.crew[0], ship.engines[0]))
-        assertEquals(false, ship.changeEngineMode(ship.crew[1], ship.engines[0]))
-        assertEquals(true, ship.changeEngineMode(ship.crew[0], ship.engines[1]))
+    fun arrayReplaceTest() {
+        assertEquals(
+            mutableListOf(1, 2, 3, 4, 1),
+            P6.arrayReplace(mutableListOf(1, 2, 3, 4, 5), 5, 1)
+        )
+        assertEquals(
+            mutableListOf(1, 2, 3, 4),
+            P6.arrayReplace(mutableListOf(1, 2, 3, 4), 0, 1)
+        )
+        assertEquals(
+            mutableListOf(1, 1, 1, 1, 1),
+            P6.arrayReplace(mutableListOf(3, 3, 3, 3, 3), 3, 1)
+        )
+        assertEquals(
+            mutableListOf(11, 115, 15, 21, 56),
+            P6.arrayReplace(mutableListOf(11, 115, 15, 21, 12), 12, 56)
+        )
+        assertEquals(
+            mutableListOf(2, 2, 2, 2, 2, 2),
+            P6.arrayReplace(mutableListOf(1, 2, 1, 2, 1, 2), 1, 2)
+        )
+        assertEquals(
+            mutableListOf(-1, -1, -1, 11, -1),
+            P6.arrayReplace(mutableListOf(-1, 1, 1, 11, -1), 1, -1)
+        )
     }
 
     @Test
-    fun CabinTest() {
-        assertEquals(true, ship.cabins[0].assignTourist(ship.tourists[0]))
-        assertEquals(false, ship.cabins[0].assignTourist(ship.tourists[0]))
-        assertEquals(true, ship.cabins[0].assignTourist(ship.tourists[1]))
-        assertEquals(false, ship.cabins[0].assignTourist(ship.tourists[2]))
-        assertEquals(true, ship.cabins[1].assignTourist(ship.tourists[2]))
+    fun evenDigitsOnlyTest() {
+        assertEquals(true, P6.evenDigitsOnly(68))
+        assertEquals(true, P6.evenDigitsOnly(-42))
+        assertEquals(true, P6.evenDigitsOnly(246808))
+        assertEquals(true, P6.evenDigitsOnly(0))
+        assertEquals(false, P6.evenDigitsOnly(13))
+        assertEquals(false, P6.evenDigitsOnly(22221))
+        assertEquals(false, P6.evenDigitsOnly(15799))
+        assertEquals(false, P6.evenDigitsOnly(2457680))
     }
+
+    @Test
+    fun variableName() {
+        assertEquals(true, P6.variableName("some_name"))
+        assertEquals(true, P6.variableName("name234"))
+        assertEquals(true, P6.variableName("r2__an2d5om"))
+        assertEquals(true, P6.variableName("_"))
+        assertEquals(true, P6.variableName("a5"))
+        assertEquals(false, P6.variableName("not good"))
+        assertEquals(false, P6.variableName(":("))
+        assertEquals(false, P6.variableName("4almost_good"))
+        assertEquals(false, P6.variableName("kmd-=34_"))
+    }
+
+    @Test
+    fun alphabeticShiftTest() {
+        assertEquals("bcde", P6.alphabeticShift("abcd"))
+        assertEquals("AZYX", P6.alphabeticShift("ZYXW"))
+        assertEquals("nnn", P6.alphabeticShift("mmm"))
+        assertEquals(" <<", P6.alphabeticShift(" <<"))
+        assertEquals("Ofyu Uftu", P6.alphabeticShift("Next Test"))
+        assertEquals("", P6.alphabeticShift(""))
+    }
+
+    @Test
+    fun chessBoardCellColorTest() {
+        assertEquals(true, P6.chessBoardCellColor("a1", "c3"))
+        assertEquals(true, P6.chessBoardCellColor("a1", "c1"))
+        assertEquals(true, P6.chessBoardCellColor("a2", "f3"))
+        assertEquals(true, P6.chessBoardCellColor("g6", "g6"))
+        assertEquals(false, P6.chessBoardCellColor("g6", "g7"))
+        assertEquals(false, P6.chessBoardCellColor("a3", "f5"))
+        assertEquals(false, P6.chessBoardCellColor("g6", "h2"))
+    }
+
+
 
 }

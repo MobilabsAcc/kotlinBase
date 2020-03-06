@@ -25,6 +25,8 @@ object P5 {
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
+        if(inputArray.size < 2)
+            return 0
         var max:Int = abs(inputArray[0]-inputArray[1])
         for( i in 1 until inputArray.size - 1){
             if(max < abs(inputArray[i]-inputArray[i+1]))
@@ -40,25 +42,20 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        if(inputString.length > 15)
+        if(inputString.length > 15  || inputString.length < 7 || inputString.filter { it=='.' }.length!=3)
             return false
-        var temp = inputString
-        var lastDot = -1
-        for (i in 0 until 4){
-            var part:String
-            var end: Int = 0
-            if(temp.contains('.')) {
-                val end = temp.indexOfFirst { it == '.' }
-                temp.replaceFirst('.', ' ')
-                part = temp.substring(lastDot, end)
+        val temp = inputString.plus('.')
+        var start = -1
+        var part:String
+        for (i in temp.indices){
+            if(temp[i] == '.') {
+                if(start + 1 == i)
+                    return false
+                part = temp.substring(start + 1, i)
+                if(part.toInt() > 255 || part.toInt() < 0)
+                    return false
+                start = i
             }
-            else {
-                part = temp.substring(lastDot)
-                end = 0
-            }
-            if(part.toInt() > 255 || part.toInt() < 0)
-                return false
-            lastDot = end + 1
         }
         return true
     }
@@ -70,7 +67,20 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        if(inputArray.isEmpty())
+            return 1
+
+        for(i in 2 until inputArray[inputArray.size-1]){
+            var j = 0
+            while (j <= inputArray[inputArray.size-1]){
+                j+=i
+                if(inputArray.contains(j))
+                    break
+            }
+            if(j > inputArray[inputArray.size-1])
+                return i
+        }
+        return inputArray[inputArray.size-1]+1
     }
 
     /**
@@ -84,11 +94,11 @@ object P5 {
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
         val blurred = mutableListOf<MutableList<Int>>()
-        for(i in 1 until image.size){
+        for(i in 1 until image.size - 1){
             blurred.add(mutableListOf())
-            for(j in 1 until image[i].size){
-                var sum:Int = 0
-                for(a in i-1 until i+2) {
+            for(j in 1 until image[i].size -1){
+                var sum = 0
+                for(a in i-1 until (i+2)) {
                     for (b in j-1 until j+2)
                         sum+=image[a][b]
                 }
@@ -113,7 +123,7 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        var outputMatrix = mutableListOf<MutableList<Int>>()
+        val outputMatrix = mutableListOf<MutableList<Int>>()
         for(i in 0 until matrix.size){
             outputMatrix.add(mutableListOf())
             for(j in 0 until matrix[i]. size){
