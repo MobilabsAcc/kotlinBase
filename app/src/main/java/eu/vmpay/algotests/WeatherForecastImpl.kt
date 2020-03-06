@@ -1,6 +1,6 @@
 package eu.vmpay.algotests
 
-data class WeatherForecastImp(
+data class WeatherForecastImpl(
     private val locationName: String,
     private val location: Pair<Double, Double>,
     private val temp: Double,

@@ -5,7 +5,7 @@ import org.junit.Test
 
 class WeatherTest {
 
-    private val weatherForecast: WeatherForecast? = WeatherForecastImp(
+    private val weatherForecast: WeatherForecast? = WeatherForecastImpl(
         "Warszawa",
         Pair(0.0, 0.0),
         20.0,

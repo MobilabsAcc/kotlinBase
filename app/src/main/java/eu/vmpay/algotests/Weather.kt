@@ -17,12 +17,12 @@ interface WeatherForecast {
 
 interface WeatherService {
 
-    fun getCurrentWeather(location: Pair<Double, Double>): WeatherForecast
+    fun getCurrentWeather(location: Pair<Double, Double>): WeatherForecast?
 
     fun getTomorrowForecast(locationName: String): List<WeatherForecast>
 
     fun getWeeklyForecast(location: Pair<Double, Double>): List<WeatherForecast>
 
-    fun getLocationsByCurrentWeatherType(weatherType: String): List<WeatherForecast>
+    fun getLocationsByCurrentWeatherType(weatherType: WeatherType): List<WeatherForecast>
 
 }
