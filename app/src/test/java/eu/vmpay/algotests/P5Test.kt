@@ -65,4 +65,12 @@ class P5Test {
         assertFalse(P5.isIPv4Address("255.255.255.255"))
         assertFalse(P5.isIPv4Address("1.1.1.1.1"))
     }
+
+    @Test
+    fun boxBlur() {
+        assertEquals(mutableListOf(mutableListOf(1)), P5.boxBlur(mutableListOf(mutableListOf(1,1,1), mutableListOf(1,1,1), mutableListOf(1,1,1))))
+        assertEquals(mutableListOf(mutableListOf(1, 1), mutableListOf(1,1)), P5.boxBlur(mutableListOf(mutableListOf(1,1,1, 1), mutableListOf(1,1,1, 1), mutableListOf(1,1,1, 1), mutableListOf(1,1,1,1))))
+        assertEquals(mutableListOf<MutableList<Int>>(), P5.boxBlur(mutableListOf(mutableListOf(1))))
+        assertEquals(mutableListOf<MutableList<Int>>(), P5.boxBlur(mutableListOf(mutableListOf())))
+    }
 }

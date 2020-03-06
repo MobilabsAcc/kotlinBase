@@ -66,18 +66,20 @@ object P6 {
         var b2 = cell2[1].toInt()
 
         if(
-            (isEven(a1, b1, true) && isEven(a2, b2, false) )
+            (isEven(a1, b1, true) && isEven(a2, b2, true) )
             ||
-            (isEven(a1, b1, false) && isEven(a2, b2, true))
+            (isEven(a1, b1, false) && isEven(a2, b2, false))
             ||
-            (isEven(a1, b1, true) == isEven(a2, b2, true))
-            ||
-            (isEven(a1, b1, false) == isEven(a2, b2, false))
+            (evenOdd(a1, b1) == evenOdd(a2,b2))
         )   return true
 
-        TODO("check if one number is ever and another is not - additional function")
 
         return false
+    }
+
+    private fun evenOdd(a : Int, b: Int) : Boolean {
+
+        return (a % 2 == 0 && b % 2 == 1) || (a % 2 == 1 && b % 2 == 0)
     }
 
     private fun isEven(a : Int, b: Int, e: Boolean) : Boolean{

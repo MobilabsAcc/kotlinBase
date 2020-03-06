@@ -97,7 +97,33 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO()
+
+        var resultList = ArrayList<ArrayList<Int>>()
+
+        if (image.size < 3 || image[0].size < 3)    return resultList as MutableList<MutableList<Int>>;
+
+        for (i: Int in 0 until image.size - 2){
+
+            var tmpList = ArrayList<Int>()
+
+            for (j: Int in 0 until image[i].size - 2){
+                tmpList.add(blur(image, i, j))
+            }
+            resultList.add(tmpList)
+        }
+        return resultList as MutableList<MutableList<Int>>
+    }
+
+    fun blur(list: MutableList<MutableList<Int>>, a: Int, b: Int): Int{
+
+        var sum = 0
+
+        for (i: Int in a until  a+3){
+            for (j: Int in b until  b+3){
+                sum += list[i][j]
+            }
+        }
+        return sum / 9
     }
 
     /**
