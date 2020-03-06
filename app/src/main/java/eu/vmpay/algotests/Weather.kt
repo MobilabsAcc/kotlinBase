@@ -1,6 +1,17 @@
 package eu.vmpay.algotests
 
+enum class WeatherType {
+    SUNNY,
+    CLOUDY,
+    RAINY,
+    SNOWY,
+    STORMY,
+    WINDY,
+    FOGGY
+}
+
 interface WeatherForecast {
+
 
     fun getLocationName(): String
 
@@ -12,17 +23,17 @@ interface WeatherForecast {
 
     fun getPressure(): Double
 
-    fun getWeatherType(): String
+    fun getWeatherType(): WeatherType
 }
 
 interface WeatherService {
 
-    fun getCurrentWeather(location: Pair<Double, Double>): WeatherForecast
+    fun getCurrentWeather(location: Pair<Double, Double>): WeatherForecast?
 
     fun getTomorrowForecast(locationName: String): List<WeatherForecast>
 
     fun getWeeklyForecast(location: Pair<Double, Double>): List<WeatherForecast>
 
-    fun getLocationsByCurrentWeatherType(weatherType: String): List<WeatherForecast>
+    fun getLocationsByCurrentWeatherType(weatherType: WeatherType): List<WeatherForecast>
 
 }
