@@ -1,8 +1,6 @@
-package eu.vmpay.algotests
+package eu.vmpay.algotests.oop
 
 import java.lang.Exception
-import java.lang.RuntimeException
-import java.util.*
 
 /**
  * Challenge 2 - The cruise ship
@@ -20,10 +18,15 @@ import java.util.*
 
 
 class Ship() {
-    val engines = listOf(Engine.smallerEngine, Engine.biggerEngine)
+    val engines = listOf(
+        Engine.smallerEngine,
+        Engine.biggerEngine
+    )
     val Crew = arrayOfNulls<shipCrewPerson>(50)
     val tourists = arrayOfNulls<Person>(350)
-    val places = listOf(Place.Bar, Place.Bar, listOf<Place>())
+    val places = listOf(
+        Place.Bar,
+        Place.Bar, listOf<Place>())
 }
 
 enum class Engine(val power: Int) {
