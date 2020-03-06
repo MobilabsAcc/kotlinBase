@@ -110,10 +110,10 @@ object P5 {
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
         val blurredBox = mutableListOf<MutableList<Int>>()
-        for(i in 1 until image.lastIndex){
+        for (i in 1 until image.lastIndex) {
             blurredBox.add(mutableListOf())
-            for(j in 1 until image[i].lastIndex){
-                blurredBox[i-1].add(countAverage(i,j,image))
+            for (j in 1 until image[i].lastIndex) {
+                blurredBox[i - 1].add(countAverage(i, j, image))
             }
         }
         return blurredBox
@@ -125,11 +125,11 @@ object P5 {
         matrix: MutableList<MutableList<Int>>
     ): Int {
         var sum = 0
-        for (i in x-1..x + 1)
-            for (j in y-1..y+1) {
-                    sum += matrix[i][j]
+        for (i in x - 1..x + 1)
+            for (j in y - 1..y + 1) {
+                sum += matrix[i][j]
             }
-        return sum/9
+        return sum / 9
     }
 
     /**

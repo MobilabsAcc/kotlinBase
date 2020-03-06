@@ -20,10 +20,7 @@ class P5Test {
         assertEquals(1, P5.arrayMaximalAdjacentDifference(mutableListOf(1, 2, 3, 4, 5, 6, 7)))
         assertEquals(1, P5.arrayMaximalAdjacentDifference(mutableListOf(0, 1, 0, 1, 0, 1)))
         assertEquals(99, P5.arrayMaximalAdjacentDifference(mutableListOf(100, 99, 0, 1, 0, -1)))
-        assertEquals(
-            101,
-            P5.arrayMaximalAdjacentDifference(mutableListOf(100, 0, -101, -33, 25, 86))
-        )
+        assertEquals(101, P5.arrayMaximalAdjacentDifference(mutableListOf(100, 0, -101, -33, 25, 86)))
         assertEquals(0, P5.arrayMaximalAdjacentDifference(mutableListOf(9, 9, 9, 9, 9)))
         assertEquals(0, P5.arrayMaximalAdjacentDifference(mutableListOf(1)))
         assertEquals(349, P5.arrayMaximalAdjacentDifference(mutableListOf(125, -125, 0, -234, 115)))
