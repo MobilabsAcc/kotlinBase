@@ -1,5 +1,7 @@
 package eu.vmpay.algotests
 
+import kotlin.math.abs
+
 object P5 {
     /**
      * Call two arms equally strong if the heaviest weights they each are able to lift are equal.
@@ -7,15 +9,27 @@ object P5 {
      * can be both the right and the left), and so are their weakest arms. Given your and your
      * friend's arms' lifting capabilities find out if you two are equally strong.
      */
-    fun areEquallyStrong(yourLeft: Int, yourRight: Int, friendsLeft: Int, friendsRight: Int): Boolean {
-        TODO("not implemented")
+    fun areEquallyStrong(
+        yourLeft: Int,
+        yourRight: Int,
+        friendsLeft: Int,
+        friendsRight: Int
+    ): Boolean {
+        val yourStrength = if (yourLeft > yourRight) yourLeft else yourRight
+        val friendStrength = if (friendsLeft > friendsRight) friendsLeft else friendsRight
+        return yourStrength == friendStrength
     }
 
     /**
      * Given an array of integers, find the maximal absolute difference between any two of its adjacent elements.
      */
     fun arrayMaximalAdjacentDifference(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var max = 0
+        for (i in 0 until inputArray.indices.last) {
+            if (abs(inputArray[i] - inputArray[i + 1]) > max)
+                max = abs(inputArray[i] - inputArray[i + 1])
+        }
+        return max
     }
 
     /**
@@ -25,7 +39,13 @@ object P5 {
      * One of them is the IPv4 address. Given a string, find out if it satisfies the IPv4 address naming rules.
      */
     fun isIPv4Address(inputString: String): Boolean {
-        TODO("not implemented")
+        val s = inputString.split(".")
+        if (s.size != 4)
+            return false
+        for (i in s.indices)
+            if (s[i].toInt() < 0 || s[i].toInt() > 255)
+                return false
+        return true
     }
 
     /**
@@ -35,7 +55,24 @@ object P5 {
      * enough to avoid all the obstacles.
      */
     fun avoidObstacles(inputArray: MutableList<Int>): Int {
-        TODO("not implemented")
+        var minLength = 1
+        var collision = true
+        val lastObstacles = inputArray.max()
+        if (lastObstacles != null) {
+            while (collision) {
+                collision = false
+                var currentPosition = 0
+                while (currentPosition < lastObstacles) {
+                    currentPosition += minLength
+                    if (inputArray.contains(currentPosition)) {
+                        collision = true
+                        minLength++
+                        break
+                    }
+                }
+            }
+        }
+        return minLength
     }
 
     /**
@@ -48,7 +85,23 @@ object P5 {
      * Return the blurred image as an integer, with the fractions rounded down.
      */
     fun boxBlur(image: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        if (image.size < 3 || image[0].size < 3)
+            return mutableListOf()
+
+        val list = mutableListOf<MutableList<Int>>()
+        for (i in 1 until image.indices.last) {
+            list.add(mutableListOf())
+            for (j in 1 until image[0].indices.last) {
+                var sum = 0
+                for (k in i - 1..i + 1) {
+                    for (l in j - 1..j + 1) {
+                        sum += image[k][l]
+                    }
+                }
+                list[i - 1].add(sum / 9)
+            }
+        }
+        return list
     }
 
     /**
@@ -66,6 +119,32 @@ object P5 {
      * [1, 1, 1]]
      */
     fun minesweeper(matrix: MutableList<MutableList<Boolean>>): MutableList<MutableList<Int>> {
-        TODO("not implemented")
+        val list = mutableListOf<MutableList<Int>>()
+        for (i in matrix.indices) {
+            list.add(mutableListOf())
+            for (j in matrix[0].indices) {
+                var sum = 0
+                var left = 0
+                var right = 0
+                var up = 0
+                var down = 0
+                if (i > 0)
+                    up--
+                if (i < matrix.indices.last)
+                    down++
+                if (j > 0)
+                    left--
+                if (j < matrix.indices.last)
+                    right++
+
+                for (k in i + up..i + down)
+                    for (l in j + left..j + right)
+                        if (k != i || l != j)
+                            if (matrix[k][l])
+                                sum++
+                list[i].add(sum)
+            }
+        }
+        return list
     }
 }
