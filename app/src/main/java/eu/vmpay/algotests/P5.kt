@@ -1,4 +1,4 @@
-package eu.vmpay.algotests.oop
+package eu.vmpay.algotests
 
 import kotlin.math.abs
 
@@ -61,7 +61,13 @@ object P5 {
         var start = -1
         for (i in 0 until address.lastIndex) {
             if (address[i] == '.') {
-                if (!isNumber(address.substring(start + 1, i)))
+                if (!isNumber(
+                        address.substring(
+                            start + 1,
+                            i
+                        )
+                    )
+                )
                     return false
                 start = i
             }
@@ -113,7 +119,13 @@ object P5 {
         for (i in 1 until image.lastIndex) {
             blurredBox.add(mutableListOf())
             for (j in 1 until image[i].lastIndex) {
-                blurredBox[i - 1].add(countAverage(i, j, image))
+                blurredBox[i - 1].add(
+                    countAverage(
+                        i,
+                        j,
+                        image
+                    )
+                )
             }
         }
         return blurredBox
@@ -151,7 +163,13 @@ object P5 {
         for (i in 0..matrix.lastIndex) {
             output.add(mutableListOf())
             for (j in 0..matrix[i].lastIndex) {
-                output[i].add(countMinedNeighbours(i, j, matrix))
+                output[i].add(
+                    countMinedNeighbours(
+                        i,
+                        j,
+                        matrix
+                    )
+                )
             }
         }
         return output

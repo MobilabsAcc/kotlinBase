@@ -11,67 +11,41 @@ package eu.vmpay.algotests.oop
  *
  * Goal: implement the bakery, donut, topping, order abstractions reflecting the above case.
  */
-enum class Donut(val price: Double) {
-    STANDARD(2.0),
-    LARGE(3.5)
+class Bakery(var numberOfDonuts: Int) {
+    val orders = mutableListOf<Order>()
+
+    fun makeOrder(donut: Donut, time: String): String {
+        if (numberOfDonuts == 0)
+            return "Out of donuts"
+        orders.add(Order(donut, time))
+        numberOfDonuts--
+
+        return "Have a nice day"
+    }
+
+    fun showOrders() {
+        for (i in 0..orders.lastIndex)
+            println(orders[i].price.toString() + orders[i].time)
+    }
+}
+
+class Donut(val size: SizeOfDonut, val toppings: List<Topping>) {}
+
+class Order(donut: Donut, val time: String) {
+    val price = donut.size.price + donut.toppings.sumByDouble { it.price }
+}
+
+
+enum class SizeOfDonut(val price: Double) {
+    standard(2.0),
+    extraLarge(3.5),
 }
 
 enum class Topping(val price: Double) {
-    CRANBERRY(1.0),
-    BLUEBERRY(1.0),
-    RASPBERRY(1.0),
-    STRAWBERRY(1.0),
-    JAM(1.5),
-    NUTELLA(1.5),
-    EMPTY(0.0)
-}
-
-enum class OrderType(val price: Double) {
-    TO_GO(0.5),
-    INSIDE(0.0)
-}
-
-data class Order(
-        val donut: Donut,
-        val topping: Topping,
-        val orderType: OrderType
-) {
-    fun getPrice() = donut.price + topping.price + orderType.price
-}
-
-interface IBakery {
-
-    fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double?
-
-    fun payOrder(price: Double?): Order?
-
-    fun getAverageOrderPrice(): Double
-}
-
-class Bakery : IBakery {
-
-    private var order: Order? = null
-    private var revenue: Double = 0.0
-    private var orderCount = 0
-
-    override fun makeOrder(donut: Donut, topping: Topping, orderType: OrderType): Double? =
-            if (order == null) {
-                Order(donut, topping, orderType).let {
-                    order = it
-                    it.getPrice()
-                }
-            } else {
-                null
-            }
-
-    override fun payOrder(price: Double?): Order? =
-            if (order != null && price != null && order?.getPrice() == price) {
-                revenue += price
-                orderCount++
-                order.also { order = null }
-            } else {
-                null
-            }
-
-    override fun getAverageOrderPrice(): Double = if (orderCount == 0) 0.0 else revenue / orderCount
+    cranberry(1.0),
+    blueberry(1.0),
+    raspberry(1.0),
+    strawberry(1.0),
+    jam(1.0),
+    nutella(2.0),
 }

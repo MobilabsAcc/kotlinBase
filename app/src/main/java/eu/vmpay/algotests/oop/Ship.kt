@@ -1,6 +1,8 @@
 package eu.vmpay.algotests.oop
 
-import kotlin.random.Random
+import java.lang.Exception
+import java.lang.RuntimeException
+import java.util.*
 
 /**
  * Challenge 2 - The cruise ship
@@ -15,153 +17,71 @@ import kotlin.random.Random
  *
  * Goal: implement the ship, engine, person, restaurant, bar, cabin classes reflecting the above case.
  */
-const val TOTAL_CAPACITY = 400
-const val CREW_CAPACITY = 50
 
-data class Engine(
-        val power: Int,
-        var isLaunched: Boolean = false
-) {
-    fun start() {
-        isLaunched = true
-    }
 
-    fun stop() {
-        isLaunched = false
-    }
+class Ship() {
+    val engines = listOf(Engine.smallerEngine, Engine.biggerEngine)
+    val Crew = arrayOfNulls<shipCrewPerson>(50)
+    val tourists = arrayOfNulls<Person>(350)
+    val places = listOf(Place.Bar, Place.Bar, listOf<Place>())
 }
 
-class Ship {
-    private val engineA = Engine(2)
-    private val engineB = Engine(4)
-    private val barA: Bar = Bar()
-    private val barB: Bar = Bar()
-    private val restaurant = Restaurant()
-    private val cabins: List<Cabin>
-    private val crew: List<CrewMember>
-    private val guests: List<Tourist>
+enum class Engine(val power: Int) {
+    biggerEngine(2),
+    smallerEngine(4);
 
-    init {
-        // Build the ship
-        var totalCapacity = 0
-        val cabinList = mutableListOf<Cabin>()
-        while (totalCapacity < TOTAL_CAPACITY) {
-            cabinList.add(Cabin(if (Random.nextInt(2) == 0) 2 else 4).also { totalCapacity += it.capacity })
-        }
-        cabins = cabinList
-        println("${cabins.size} cabins set up")
+    var work: Boolean = false
+}
 
-        // Recruit the crew
-        val candidates = mutableListOf<CrewMember>()
-        repeat(CREW_CAPACITY) { candidates.add(CrewMember(it.toLong())) }
-        crew = candidates
-        println("${crew.size} crew members recruited")
+enum class Place(var capacity: Int) {
+    smallerCabin(2),
+    biggerCabin(4),
+    Bar(50),
+    Restaurant(300);
 
-        // Invite guests
-        val tourists = mutableListOf<Tourist>()
-        for (id in CREW_CAPACITY until TOTAL_CAPACITY) {
-            val guest = Tourist(id.toLong(), Random.nextInt(1, 99))
-            tourists.add(guest)
-            if (!guest.goToPlace(barA) || !guest.goToPlace(barB) || !guest.goToPlace(restaurant)) {
-                cabins.firstOrNull { !it.isFull() }?.run { guest.goToPlace(this) }
-            }
-        }
-        guests = tourists
-        println("${guests.size} guests invited")
-    }
+    val people = mutableListOf<Tourist>()
 
-    fun setEnginePower(enginePower: EnginePower) {
-        println("Set engine power ${enginePower.name}")
-        when (enginePower) {
-            EnginePower.MAX -> {
-                engineA.start()
-                engineB.start()
-            }
-            EnginePower.HIGH -> {
-                engineA.stop()
-                engineB.start()
-            }
-            EnginePower.LOW -> {
-                engineA.start()
-                engineB.stop()
-            }
-            EnginePower.ZERO -> {
-                engineA.stop()
-                engineB.stop()
-            }
-        }
-    }
+}
 
-    fun getEnginePowerConsumption(): Int {
-        val engineA = if (engineA.isLaunched) engineA.power else 0
-        val engineB = if (engineB.isLaunched) engineB.power else 0
-        return engineA + engineB
+open class Person(val name: String, val surname: String) {}
+
+class shipCrewPerson(name: String, surname: String, val salary: Int) : Person(name, surname) {}
+
+class Captain(name: String, surname: String, val ship: Ship) : Person(name, surname) {
+    fun work(work: Boolean) {
+        ship.engines.map { it.work = work }
     }
 }
 
-enum class EnginePower {
-    MAX,
-    HIGH,
-    LOW,
-    ZERO
-}
+class Tourist(name: String, surname: String, val age: Int, val currentPlace: Place? = null) : Person(name, surname) {
+    val friends = mutableListOf<Person>()
 
-abstract class Person {
-    abstract val id: Long
-}
-
-class Tourist(
-        override val id: Long,
-        val age: Int,
-        var currentPlace: Place? = null
-) : Person() {
-
-    fun goToPlace(place: Place): Boolean {
-        return if (place.enter(this)) {
-            currentPlace = place
-            true
-        } else {
-            false
-        }
-    }
-}
-
-class CrewMember(override val id: Long) : Person()
-
-abstract class Place {
-    abstract val capacity: Int
-    abstract val isUnder18Allowed: Boolean
-    abstract val guests: MutableList<Person>
-
-    fun enter(tourist: Tourist): Boolean {
-        return if (guests.size < capacity) {
-            if (isUnder18Allowed || (!isUnder18Allowed && tourist.age > 17)) {
-                guests.add(tourist)
-                true
-            } else {
-                false
-            }
-        } else {
-            false
-        }
+    fun addFriend(tourist: Tourist) {
+        friends.add(tourist)
     }
 
-    fun isFull() = capacity >= guests.size
-}
+    fun removeFriend(tourist: Tourist) {
+        friends.remove(tourist)
 
-class Bar : Place() {
-    override val capacity: Int = 50
-    override val isUnder18Allowed: Boolean = false
-    override val guests: MutableList<Person> = mutableListOf()
-}
+    }
 
-class Restaurant : Place() {
-    override val capacity: Int = 300
-    override val isUnder18Allowed: Boolean = true
-    override val guests: MutableList<Person> = mutableListOf()
-}
+    fun move(from: Place, to: Place) {
+        if (currentPlace != null)
+            leavePlace(from)
+        enterPlace(to)
+    }
 
-class Cabin(override val capacity: Int) : Place() {
-    override val isUnder18Allowed: Boolean = true
-    override val guests: MutableList<Person> = mutableListOf()
+    fun enterPlace(place: Place) {
+        if (place.capacity == 0)
+            throw Exception("this place is full, nobody can enter here")
+
+        if (place == Place.Bar && age < 18)
+            throw Exception("you can't entered here")
+        place.capacity--
+    }
+
+    fun leavePlace(place: Place) {
+        place.capacity++
+    }
+
 }
