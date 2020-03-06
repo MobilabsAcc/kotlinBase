@@ -1,7 +1,7 @@
 package eu.vmpay.algotests
 
-import eu.vmpay.algotests.OOPtasks.Bakery
-import eu.vmpay.algotests.OOPtasks.IBakery
+import eu.vmpay.algotests.oopTasks.Bakery
+import eu.vmpay.algotests.oopTasks.IBakery
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test

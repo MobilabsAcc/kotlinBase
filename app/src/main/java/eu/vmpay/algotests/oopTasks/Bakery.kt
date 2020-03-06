@@ -1,4 +1,4 @@
-package eu.vmpay.algotests.OOPtasks
+package eu.vmpay.algotests.oopTasks
 
 /**
  * Challenge 1 - The bakery
