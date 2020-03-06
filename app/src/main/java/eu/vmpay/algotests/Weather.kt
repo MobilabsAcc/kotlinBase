@@ -12,7 +12,7 @@ interface WeatherForecast {
 
     fun getPressure(): Double
 
-    fun getWeatherType(): String
+    fun getWeatherType(): WeatherType
 }
 
 interface WeatherService {
@@ -23,6 +23,6 @@ interface WeatherService {
 
     fun getWeeklyForecast(location: Pair<Double, Double>): List<WeatherForecast>
 
-    fun getLocationsByCurrentWeatherType(weatherType: String): List<WeatherForecast>
+    fun getLocationsByCurrentWeatherType(weatherType: WeatherType): List<WeatherForecast>
 
 }
