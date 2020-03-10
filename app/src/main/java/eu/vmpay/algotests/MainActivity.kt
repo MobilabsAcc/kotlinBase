@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, getViewModelFactory()).get(UserViewModel::class.java)
 
         viewModel.userList.observe(this@MainActivity, Observer {
             fillData(it)

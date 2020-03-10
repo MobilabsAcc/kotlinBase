@@ -3,14 +3,12 @@ package eu.vmpay.algotests
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class UserViewModel : ViewModel() {
-
-    private val database = Database()
+class UserViewModel(private val database: Database) : ViewModel() {
 
     val userList = MutableLiveData<List<String>>()
 
     init {
-        userList.value = database.getUserList()
+        userList.value = this.database.getUserList()
     }
 
     fun refresh() {
