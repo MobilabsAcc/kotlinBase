@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), MainContract.MainView {
 
     private val mainPresenter: MainContract.MainPresenter
-            by lazy { MainPresenter(this, Database()) }
+            by lazy { MainPresenter(this, Injection.provideDatabase()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
